@@ -23,11 +23,11 @@ vex::motor LeftRear     = vex::motor(vex::PORT4, true);
 vex::motor RightFront   = vex::motor(vex::PORT8);
 vex::motor RightRear    = vex::motor(vex::PORT10);
 
-vex::motor LeftIntake   = vex::motor(vex::PORT11);
-vex::motor RightIntake  = vex::motor(vex::PORT18, true);
+vex::motor LeftIntake   = vex::motor(vex::PORT11, true);
+vex::motor RightIntake  = vex::motor(vex::PORT18);
 
 vex::motor BottomRoller = vex::motor(vex::PORT7, true);
-vex::motor TopRoller = vex::motor(vex::PORT16);
+vex::motor TopRoller = vex::motor(vex::PORT16, true);
 
 vex::controller ct;
 
