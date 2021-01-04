@@ -80,6 +80,10 @@ int printTimer=0;
 const double PI = 3.14159265;
 const double PROPORTIONFACTOR = 200.0 / 90.0;
 
+void spinMotor(vex::motor motorName, double speedPerc) {
+  motorName.spin(vex::directionType::fwd, speedPerc, vex::velocityUnits::pct);
+}
+
 void spinRightMotors(double speedPerc) { 
   LeftFront.spin(vex::directionType::fwd, speedPerc, vex::velocityUnits::pct);
   RightRear.spin(vex::directionType::fwd, speedPerc, vex::velocityUnits::pct);
@@ -95,6 +99,7 @@ double calcPower(double val1, double val2, double powerReduction) {
   stickAngle = atan(val1 / val2) * (180 / PI);
   return ((stickAngle * PROPORTIONFACTOR) - 100) * powerReduction;
 }
+
 
 int isPos(double num) {
   if(num >= 0) {
@@ -203,13 +208,14 @@ void drive() {
     spinLeftMotors(0);
     
   } else if(abs(leftStickX) <= 10) {
-    if (fabs(double(leftStickY) - averageSpeed) < 10) {
+    /*if (fabs(double(leftStickY) - averageSpeed) < 10) {
       spinRightMotors(100 * powerReduction * (forwardSpeed - 5));
       spinLeftMotors(100 * powerReduction * (forwardSpeed - 5));
-    } else {
+    } else {*/
+
     spinRightMotors(100 * powerReduction * isPos(leftStickY));
     spinLeftMotors(100 * powerReduction * isPos(leftStickY));
-    }
+    
 
     /* alt code
     if (fabs(getMotorSpeed(LeftFront) - getMotorSpeed(RightRear)) < 5) {
@@ -257,15 +263,44 @@ void drive() {
 
     }
 
+    double reductionAmount = 0;
+    double speedLF = getMotorSpeed(LeftFront);
+    double speedLR = getMotorSpeed(LeftFront);
+    double speedRF = getMotorSpeed(LeftFront);
+    double speedRR = getMotorSpeed(LeftFront);
+
+
+    // if a two motors in a single group spin at different speeds, reduce the speed of
+    // the faster one, and spin the other at normal speed
+    if (speedLF > speedRR) {
+      reductionAmount = (speedLF / speedRR) - 1;
+      spinMotor(LeftFront, powerRightGroup * reductionAmount);
+      spinMotor(RightRear, powerRightGroup);
+    } else {
+      reductionAmount = (speedRR / speedLF) - 1;
+      spinMotor(LeftFront, powerRightGroup);
+      spinMotor(RightRear, powerRightGroup * reductionAmount);
+    }
+
+    if (speedLR > speedRF) {
+      reductionAmount = (speedLR / speedRF) - 1;
+      spinMotor(LeftRear, powerLeftGroup * reductionAmount);
+      spinMotor(RightFront, powerLeftGroup);      
+    } else {
+      reductionAmount = (speedRF / speedLR) - 1;
+      spinMotor(LeftRear, powerLeftGroup);
+      spinMotor(RightFront, powerLeftGroup * reductionAmount);
+    }
+
     //powerRightGroup = roundNum(powerRightGroup, 0, 10);
     //powerLeftGroup = roundNum(powerLeftGroup, 0, 10);
 
     printf("right = %f", powerRightGroup);
     printf(" left = %f/n", powerLeftGroup);
-
+    /*
     spinRightMotors(powerRightGroup);
     spinLeftMotors(powerLeftGroup);
-      
+    */
   }
 
 }
