@@ -17,6 +17,26 @@
 
 #include "robot-config.h"
 
+extern competition Competition;
+
+extern vex::motor LeftFront;
+extern vex::motor LeftRear;
+extern vex::motor RightFront;
+extern vex::motor RightRear;
+
+extern vex::motor LeftIntake;
+extern vex::motor RightIntake;
+
+extern vex::motor BottomRoller;
+extern vex::motor TopRoller;
+
+extern vex::controller ct;
+
+//drive file
+void spinMotor(vex::motor motorName, double speedPerc);
+double getMotorSpeed(vex::motor motorName);
+void drive();
+
 #define waitUntil(condition)                                                   \
   do {                                                                         \
     wait(5, msec);                                                             \
