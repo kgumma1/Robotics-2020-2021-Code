@@ -17,6 +17,7 @@
 
 #include "robot-config.h"
 
+extern brain Brain;
 extern competition Competition;
 
 extern vex::motor LeftFront;
@@ -36,6 +37,13 @@ extern vex::controller ct;
 void spinMotor(vex::motor motorName, double speedPerc);
 double getMotorSpeed(vex::motor motorName);
 void drive();
+
+//intakes file
+void intake();
+
+
+//auton file
+void auton();
 
 #define waitUntil(condition)                                                   \
   do {                                                                         \

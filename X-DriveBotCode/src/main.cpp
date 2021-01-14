@@ -8,15 +8,20 @@
 /*----------------------------------------------------------------------------*/
 
 // ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// LeftRatchet          bumper        H               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 //#include "setup.cpp"
 #include "vex.h"
 
+
 using namespace vex;
 
 // A global instance of competition
 competition Competition;
+
 
 // define your global instances of motors and other devices here
 
@@ -30,6 +35,7 @@ vex::motor RightIntake(vex::PORT18);
 
 vex::motor BottomRoller(vex::PORT7, true);
 vex::motor TopRoller(vex::PORT16, true);
+
 
 vex::controller ct;
 
@@ -65,6 +71,7 @@ void autonomous(void) {
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
+  auton();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -79,55 +86,28 @@ void autonomous(void) {
 
 
 
-void intake(){
-  // R1 = run intakes
-  // R2 = run intakes + rollers
-  if (ct.ButtonR1.pressing() || ct.ButtonR2.pressing()) {
-    LeftIntake.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-    RightIntake.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-    } else if (ct.ButtonRight.pressing()){
-    //LeftIntake.spin(vex::directionType::rev, intakespeed, vex::velocityUnits::pct);
-    //RightIntake.spin(vex::directionType::rev, intakespeed, vex::velocityUnits::pct);
-    LeftIntake.spin(vex::directionType::rev, 12, vex::voltageUnits::volt);
-    RightIntake.spin(vex::directionType::rev, 12, vex::voltageUnits::volt);
-    } else {
-     LeftIntake.stop(vex::brakeType::hold);
-     RightIntake.stop(vex::brakeType::hold);
-   }
-}
+
 
 void rollers() {
   // L1 = intake, L2 = outtake, otherwise stop
   // R2 = run intakes + rollers
-  if(ct.ButtonL1.pressing() || ct.ButtonR2.pressing()) {
+  if(ct.ButtonL1.pressing()) {
     BottomRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
     TopRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
   } else if (ct.ButtonL2.pressing()) {
     BottomRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
     TopRoller.spin(vex::directionType::rev, 12, vex::voltageUnits::volt);
+  } else if (ct.ButtonY.pressing()) {
+    TopRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
   } else {
-    BottomRoller.stop(vex::brakeType::hold);
-    TopRoller.stop(vex::brakeType::hold);
+    BottomRoller.stop(vex::brakeType::coast);
+    TopRoller.stop(vex::brakeType::coast);
   }
 
 }
 
 
 
-void syncRatchet() {
-  // turn motor until it starts struggling, then stop
-  spinMotor(LeftIntake, -20);
-  while(getMotorSpeed(LeftIntake) > -10){
-    continue;
-  }
-  LeftIntake.stop(vex::brakeType::coast);
-
-  spinMotor(RightIntake, -20);
-  while(getMotorSpeed(RightIntake) > -10){
-    continue;
-  }
-  RightIntake.stop(vex::brakeType::coast);
-}
 
 void usercontrol(void) {
   // User control code here, inside the loop
@@ -146,7 +126,6 @@ void usercontrol(void) {
     intake();
 
     rollers();
-
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

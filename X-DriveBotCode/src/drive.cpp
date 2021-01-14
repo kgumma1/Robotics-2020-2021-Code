@@ -1,18 +1,6 @@
 #include "vex.h"
 
 using namespace vex;
-//#include "setup.cpp"
-/*// A global instance of competition
-using namespace vex;
-
-// define your global instances of motors and other devices here
-
-vex::motor LeftFront    = vex::motor(vex::PORT5, true);
-vex::motor LeftRear     = vex::motor(vex::PORT4, true);
-vex::motor RightFront   = vex::motor(vex::PORT8);
-vex::motor RightRear    = vex::motor(vex::PORT10);
-
-vex::controller ct;*/
 
 int printTimer=0;
 
@@ -244,8 +232,8 @@ void drive() {
     //powerRightGroup = roundNum(powerRightGroup, 0, 10);
     //powerLeftGroup = roundNum(powerLeftGroup, 0, 10);
 
-    printf("right = %f", powerRightGroup);
-    printf(" left = %f/n", powerLeftGroup);
+    //printf("right = %f", powerRightGroup);
+    //printf(" left = %f/n", powerLeftGroup);
     /*
     spinRightMotors(powerRightGroup);
     spinLeftMotors(powerLeftGroup);
