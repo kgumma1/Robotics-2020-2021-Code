@@ -8,7 +8,8 @@ using code = vision::code;
 brain  Brain;
 
 // VEXcode device constructors
-bumper LeftRatchet = bumper(Brain.ThreeWirePort.H);
+line topSensor = line(Brain.ThreeWirePort.D);
+line bottomSensor = line(Brain.ThreeWirePort.E);
 
 // VEXcode generated functions
 

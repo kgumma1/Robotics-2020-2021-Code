@@ -10,7 +10,8 @@
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
-// LeftRatchet          bumper        H               
+// topSensor            line          D               
+// bottomSensor         line          E               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 //#include "setup.cpp"
@@ -30,7 +31,7 @@ vex::motor LeftRear(vex::PORT4, true);
 vex::motor RightFront(vex::PORT8);
 vex::motor RightRear(vex::PORT10);
 
-vex::motor LeftIntake(vex::PORT11, true);
+vex::motor LeftIntake(vex::PORT17, true);
 vex::motor RightIntake(vex::PORT18);
 
 vex::motor BottomRoller(vex::PORT7, true);
@@ -85,7 +86,13 @@ void autonomous(void) {
 /*---------------------------------------------------------------------------*/
 
 
-
+void release() {
+  if (ct.ButtonX.pressing()) {
+    TopRoller.spinFor(180, vex::rotationUnits::deg, 20, vex::velocityUnits::pct, true);
+    RightIntake.spinFor(180, vex::rotationUnits::deg, 20, vex::velocityUnits::pct, true);
+    LeftIntake.spinFor(180, vex::rotationUnits::deg, 20, vex::velocityUnits::pct, true);
+  }
+}
 
 
 void rollers() {
@@ -102,6 +109,9 @@ void rollers() {
   } else {
     BottomRoller.stop(vex::brakeType::coast);
     TopRoller.stop(vex::brakeType::coast);
+  }
+  if (ct.ButtonR2.pressing()) {
+    BottomRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
   }
 
 }
@@ -126,6 +136,8 @@ void usercontrol(void) {
     intake();
 
     rollers();
+
+    release();
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

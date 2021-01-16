@@ -3,7 +3,8 @@ using namespace vex;
 extern brain Brain;
 
 // VEXcode devices
-extern bumper LeftRatchet;
+extern line topSensor;
+extern line bottomSensor;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

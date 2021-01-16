@@ -107,13 +107,25 @@ void drive() {
   double averageSpeed = findAvg(motorValues);
   double maxSpeed = findMax(motorValues);
 
+
+  double reductionAmount = 0;
+  double speedLF = getMotorSpeed(LeftFront);
+  double speedLR = getMotorSpeed(LeftFront);
+  double speedRF = getMotorSpeed(LeftFront);
+  double speedRR = getMotorSpeed(LeftFront);
+
+  double splineLF = 1;
+  double splineLR = 1;
+  double splineRF = 1;
+  double splineRR = 1;
+
   powerReduction = expFunction( sqrt( pow(leftStickX, 2) + pow(leftStickY, 2) ) ) / 100;
   //powerReduction = sqrt( pow(leftStickX, 2) + pow(leftStickY, 2) ) / 100;
     
   if(abs(rightStickX) > 5) {
     //used when a spinning motion is desired
     rightStickX = expFunction(rightStickX) * isPos(rightStickX);
-
+    
     LeftFront.spin(vex::directionType::fwd, rightStickX, vex::velocityUnits::pct);
     LeftRear.spin(vex::directionType::fwd, rightStickX, vex::velocityUnits::pct);
     RightFront.spin(vex::directionType::fwd, -rightStickX, vex::velocityUnits::pct);
@@ -149,10 +161,15 @@ void drive() {
       spinRightMotors(100 * powerReduction * (forwardSpeed - 5));
       spinLeftMotors(100 * powerReduction * (forwardSpeed - 5));
     } else {*/
-
+    /*
     spinRightMotors(100 * powerReduction * isPos(leftStickY));
-    spinLeftMotors(100 * powerReduction * isPos(leftStickY));
+    spinLeftMotors(100 * powerReduction * isPos(leftStickY));*/
+    spinMotor(LeftFront, 100 * powerReduction * isPos(leftStickY) * splineLF);
+    spinMotor(LeftRear, 100 * powerReduction * isPos(leftStickY) * splineLR);
+    spinMotor(RightFront, 100 * powerReduction * isPos(leftStickY) * splineRF);
+    spinMotor(RightRear, 100 * powerReduction * isPos(leftStickY) * splineRR);
     
+
 
     /* alt code
     if (fabs(getMotorSpeed(LeftFront) - getMotorSpeed(RightRear)) < 5) {
@@ -169,8 +186,13 @@ void drive() {
 
 
   } else if(abs(leftStickY) <= 30) {
-    spinRightMotors(100 * powerReduction * isPos(leftStickX));
-    spinLeftMotors(-100 * powerReduction * isPos(leftStickX)); 
+    /*spinRightMotors(100 * powerReduction * isPos(leftStickX));
+    spinLeftMotors(-100 * powerReduction * isPos(leftStickX)); */
+
+    spinMotor(LeftFront, 100 * powerReduction * isPos(leftStickY) * splineLF);
+    spinMotor(LeftRear, -100 * powerReduction * isPos(leftStickY) * splineLR);
+    spinMotor(RightFront, -100 * powerReduction * isPos(leftStickY) * splineRF);
+    spinMotor(RightRear, 100 * powerReduction * isPos(leftStickY) * splineRR);
 
   } else if (abs(leftStickX) <= 30 && abs(leftStickY) <= 30) {
       
@@ -200,33 +222,29 @@ void drive() {
 
     }
 
-    double reductionAmount = 0;
-    double speedLF = getMotorSpeed(LeftFront);
-    double speedLR = getMotorSpeed(LeftFront);
-    double speedRF = getMotorSpeed(LeftFront);
-    double speedRR = getMotorSpeed(LeftFront);
 
 
     // if a two motors in a single group spin at different speeds, reduce the speed of
     // the faster one, and spin the other at normal speed
+    
     if (speedLF > speedRR) {
       reductionAmount = (speedLF / speedRR) - 1;
-      spinMotor(LeftFront, powerRightGroup * reductionAmount);
-      spinMotor(RightRear, powerRightGroup);
+      spinMotor(LeftFront, powerRightGroup * reductionAmount * splineLF);
+      spinMotor(RightRear, powerRightGroup * splineRR);
     } else {
       reductionAmount = (speedRR / speedLF) - 1;
-      spinMotor(LeftFront, powerRightGroup);
-      spinMotor(RightRear, powerRightGroup * reductionAmount);
+      spinMotor(LeftFront, powerRightGroup * splineLF);
+      spinMotor(RightRear, powerRightGroup * reductionAmount * splineRR);
     }
 
     if (speedLR > speedRF) {
       reductionAmount = (speedLR / speedRF) - 1;
-      spinMotor(LeftRear, powerLeftGroup * reductionAmount);
-      spinMotor(RightFront, powerLeftGroup);      
+      spinMotor(LeftRear, powerLeftGroup * reductionAmount * splineLR);
+      spinMotor(RightFront, powerLeftGroup * splineRF);      
     } else {
       reductionAmount = (speedRF / speedLR) - 1;
-      spinMotor(LeftRear, powerLeftGroup);
-      spinMotor(RightFront, powerLeftGroup * reductionAmount);
+      spinMotor(LeftRear, powerLeftGroup * splineLR);
+      spinMotor(RightFront, powerLeftGroup * reductionAmount * splineRF);
     }
 
     //powerRightGroup = roundNum(powerRightGroup, 0, 10);

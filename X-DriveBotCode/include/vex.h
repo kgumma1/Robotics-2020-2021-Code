@@ -42,8 +42,9 @@ void drive();
 void intake();
 
 
-//auton file
+//autons
 void auton();
+void progSkills();
 
 #define waitUntil(condition)                                                   \
   do {                                                                         \
