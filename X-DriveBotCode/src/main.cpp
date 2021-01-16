@@ -40,6 +40,7 @@ vex::motor TopRoller(vex::PORT16, true);
 
 vex::controller ct;
 
+
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
 /*                                                                           */
@@ -84,7 +85,21 @@ void autonomous(void) {
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
+int topSensorInit = 0;
 
+void initializeSensor() {
+  wait(5000, msec);
+  topSensorInit = topSensor.value(vex::analogUnits::range12bit);
+  while (1) {
+    if (topSensor.value(vex::analogUnits::range12bit) > topSensorInit) {
+      topSensorInit = topSensor.value(vex::analogUnits::range12bit) - 70;
+    }
+    //printf("sensorinit = %d\n", topSensorInit);
+    wait(100, msec);
+  }
+}
+
+vex::event startInitTop(initializeSensor);
 
 void release() {
   if (ct.ButtonX.pressing()) {
@@ -101,27 +116,38 @@ void rollers() {
   if(ct.ButtonL1.pressing()) {
     BottomRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
     TopRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
+    TopRoller.setBrake(vex::brakeType::coast);
   } else if (ct.ButtonL2.pressing()) {
     BottomRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
     TopRoller.spin(vex::directionType::rev, 12, vex::voltageUnits::volt);
+    TopRoller.setBrake(vex::brakeType::coast);
   } else if (ct.ButtonY.pressing()) {
     TopRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
+    TopRoller.setBrake(vex::brakeType::coast);
+  } else if (ct.ButtonR2.pressing()) {
+    BottomRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
+    if ((topSensorInit - topSensor.value(vex::analogUnits::range12bit)) < 30) {
+      printf("diff = %ld\n", topSensorInit - topSensor.value(vex::analogUnits::range12bit));
+      TopRoller.spin(vex::directionType::fwd, 3, vex::voltageUnits::volt);
+    } else {
+      TopRoller.stop(vex::brakeType::hold);
+      TopRoller.setBrake(vex::brakeType::hold);
+    }
   } else {
     BottomRoller.stop(vex::brakeType::coast);
-    TopRoller.stop(vex::brakeType::coast);
-  }
-  if (ct.ButtonR2.pressing()) {
-    BottomRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
+    TopRoller.stop();
   }
 
 }
 
-
-
-
 void usercontrol(void) {
   // User control code here, inside the loop
+  startInitTop.broadcast();
+
   while (1) {
+    if(ct.ButtonLeft.pressing()) {
+      auton();
+    }
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
@@ -138,6 +164,10 @@ void usercontrol(void) {
     rollers();
 
     release();
+
+    //printf("sensor = %ld\n", topSensor.value(vex::analogUnits::range12bit));
+    //printf("sensorinit = %d\n", topSensorInit);
+ 
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

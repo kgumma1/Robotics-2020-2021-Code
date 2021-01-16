@@ -85,8 +85,7 @@ void drive() {
       powerRightGroup = -100 * powerReduction;
 
     }
-    printf("right = %f/n", powerRightGroup);
-    printf("left = %f/n", powerLeftGroup);
+
     
     spinMotor(LeftFront, round100(powerRightGroup + rightStickX));
     spinMotor(RightRear, round100(powerRightGroup - rightStickX));
