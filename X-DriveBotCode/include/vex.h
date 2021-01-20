@@ -33,18 +33,38 @@ extern vex::motor TopRoller;
 
 extern vex::controller ct;
 
+extern const double PI;
+extern double turnCirc;
+extern double wheelCirc;
+
+extern int bottomSensorInit;
+extern int topSensorInit;
+
+void testing();
+
 //drive file
 void spinMotor(vex::motor motorName, double speedPerc);
 double getMotorSpeed(vex::motor motorName);
 void drive();
 
 //intakes file
-void intake();
+void intakeDrive();
 
+//rollers file
+void rollers();
 
-//autons
+//auton
 void auton();
 void progSkills();
+void progSkillsCenter();
+void release();
+void move(double length, double speed, bool waitComp = true);
+void spinRobot(double spinAngle, bool spinRight, double speed, bool waitComp = true);
+void movePid (double distances[], vex::motor motornames[], int numElements);
+void straightPid(double length);
+void strafeRightPid(double length);
+void turnRightPid(double spinAngle);
+
 
 #define waitUntil(condition)                                                   \
   do {                                                                         \

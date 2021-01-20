@@ -12,6 +12,8 @@
 // [Name]               [Type]        [Port(s)]
 // topSensor            line          D               
 // bottomSensor         line          E               
+// leftEncoder          encoder       A, B            
+// rightEncoder         encoder       G, H            
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 //#include "setup.cpp"
@@ -51,12 +53,18 @@ vex::controller ct;
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
+int topSensorInit = 0;
+int bottomSensorInit = 0;
+
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
+  wait(7000, msec);
+  topSensorInit = topSensor.value(vex::analogUnits::range12bit);
+  bottomSensorInit = bottomSensor.value(vex::analogUnits::range12bit);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -85,9 +93,8 @@ void autonomous(void) {
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
-int topSensorInit = 0;
 
-void initializeSensor() {
+/*void initializeSensor() {
   wait(5000, msec);
   topSensorInit = topSensor.value(vex::analogUnits::range12bit);
   while (1) {
@@ -97,52 +104,18 @@ void initializeSensor() {
     //printf("sensorinit = %d\n", topSensorInit);
     wait(100, msec);
   }
-}
+}*/
 
-vex::event startInitTop(initializeSensor);
-
-void release() {
-  if (ct.ButtonX.pressing()) {
-    TopRoller.spinFor(180, vex::rotationUnits::deg, 20, vex::velocityUnits::pct, true);
-    RightIntake.spinFor(180, vex::rotationUnits::deg, 20, vex::velocityUnits::pct, true);
-    LeftIntake.spinFor(180, vex::rotationUnits::deg, 20, vex::velocityUnits::pct, true);
-  }
-}
+//vex::event startInitTop(initializeSensor);
 
 
-void rollers() {
-  // L1 = intake, L2 = outtake, otherwise stop
-  // R2 = run intakes + rollers
-  if(ct.ButtonL1.pressing()) {
-    BottomRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
-    TopRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
-    TopRoller.setBrake(vex::brakeType::coast);
-  } else if (ct.ButtonL2.pressing()) {
-    BottomRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
-    TopRoller.spin(vex::directionType::rev, 12, vex::voltageUnits::volt);
-    TopRoller.setBrake(vex::brakeType::coast);
-  } else if (ct.ButtonY.pressing()) {
-    TopRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
-    TopRoller.setBrake(vex::brakeType::coast);
-  } else if (ct.ButtonR2.pressing()) {
-    BottomRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
-    if ((topSensorInit - topSensor.value(vex::analogUnits::range12bit)) < 30) {
-      printf("diff = %ld\n", topSensorInit - topSensor.value(vex::analogUnits::range12bit));
-      TopRoller.spin(vex::directionType::fwd, 3, vex::voltageUnits::volt);
-    } else {
-      TopRoller.stop(vex::brakeType::hold);
-      TopRoller.setBrake(vex::brakeType::hold);
-    }
-  } else {
-    BottomRoller.stop(vex::brakeType::coast);
-    TopRoller.stop();
-  }
 
-}
+
+
 
 void usercontrol(void) {
   // User control code here, inside the loop
-  startInitTop.broadcast();
+  //startInitTop.broadcast();
 
   while (1) {
     if(ct.ButtonLeft.pressing()) {
@@ -159,11 +132,13 @@ void usercontrol(void) {
 
     drive();
 
-    intake();
+    intakeDrive();
 
     rollers();
 
-    release();
+    if (ct.ButtonX.pressing()) {
+      release();
+    }
 
     //printf("sensor = %ld\n", topSensor.value(vex::analogUnits::range12bit));
     //printf("sensorinit = %d\n", topSensorInit);

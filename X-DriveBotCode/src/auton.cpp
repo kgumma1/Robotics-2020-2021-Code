@@ -2,10 +2,24 @@
 
 using namespace vex;
 
+void release() {
+  
+  TopRoller.spinFor(180, vex::rotationUnits::deg, 20, vex::velocityUnits::pct, false);
+  RightIntake.spinFor(180, vex::rotationUnits::deg, 20, vex::velocityUnits::pct, false);
+  LeftIntake.spinFor(180, vex::rotationUnits::deg, 20, vex::velocityUnits::pct, true);
+  
+}
+
 void auton() {
-  int autonSelect = 1;
+  int autonSelect = 0;
+  if(autonSelect == 0) {
+    testing();
+  }
   if (autonSelect == 1) {
     progSkills();
+  }
+  if(autonSelect == 2) {
+    progSkillsCenter();
   }
   
 }

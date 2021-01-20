@@ -6,7 +6,7 @@ void ratchet() {
 
 }
 
-void intake(){
+void intakeDrive(){
   if (ct.ButtonR1.pressing() || ct.ButtonR2.pressing()) {
     LeftIntake.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
     RightIntake.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);

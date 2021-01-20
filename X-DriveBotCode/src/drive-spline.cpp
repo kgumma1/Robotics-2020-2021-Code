@@ -64,6 +64,13 @@ void drive() {
 
   
   if ((abs(leftStickX) >= 20 || abs(leftStickY) >= 20) || abs(rightStickX) > 5) {
+    if (abs(leftStickX) < 25) {
+      leftStickX = 0;
+    }
+
+    if(abs(leftStickY) < 10) {
+      leftStickY = 0;
+    }
 
     rightStickX = expFunction(rightStickX) * isPos(rightStickX) / 2;
     

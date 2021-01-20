@@ -10,6 +10,8 @@ brain  Brain;
 // VEXcode device constructors
 line topSensor = line(Brain.ThreeWirePort.D);
 line bottomSensor = line(Brain.ThreeWirePort.E);
+encoder leftEncoder = encoder(Brain.ThreeWirePort.A);
+encoder rightEncoder = encoder(Brain.ThreeWirePort.G);
 
 // VEXcode generated functions
 

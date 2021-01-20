@@ -2,9 +2,7 @@
 
 using namespace vex;
 
-int topSensorInitProg = 0;
-int bottomSensorInitProg = 0;
-
+/*
 void initializeSensorProg() {
   wait(5000, msec);
   topSensorInitProg = topSensor.value(vex::analogUnits::range12bit);
@@ -20,28 +18,25 @@ void initializeSensorProg() {
     //printf("sensorinit = %d\n", topSensorInit);
     wait(100, msec);
   }
-}
+}*/
 
 
 
-vex::event startInitTopProg(initializeSensorProg);
-
-double PI = 3.1415926535;
+//vex::event startInitTopProg(initializeSensorProg);
 
 double wheelCirc = 3.25 * PI;
 
-double turnCirc = 16.375 * PI;
+double turnCirc = 12 * PI;
 
-void move(double length, double speed, bool waitComp = true) {
-  length = length * sqrt(2);
+void move(double length, double speed, bool waitComp) {
   
-  LeftFront.spinFor(length/wheelCirc, vex::rotationUnits::rev, speed, vex::velocityUnits::pct, false);
-  LeftRear.spinFor(length/wheelCirc, vex::rotationUnits::rev, speed, vex::velocityUnits::pct, false);
-  RightFront.spinFor(length/wheelCirc, vex::rotationUnits::rev, speed, vex::velocityUnits::pct, false);
-  RightRear.spinFor(length/wheelCirc, vex::rotationUnits::rev, speed, vex::velocityUnits::pct, waitComp);
+  LeftFront.spinFor(length / 19.75, vex::rotationUnits::rev, speed, vex::velocityUnits::pct, false);
+  LeftRear.spinFor(length / 19.75, vex::rotationUnits::rev, speed, vex::velocityUnits::pct, false);
+  RightFront.spinFor(length / 19.75, vex::rotationUnits::rev, speed, vex::velocityUnits::pct, false);
+  RightRear.spinFor(length / 19.75, vex::rotationUnits::rev, speed, vex::velocityUnits::pct, waitComp);
 }
 
-void spinRobot(double spinAngle, bool spinRight, double speed, bool waitComp = true) {
+void spinRobot(double spinAngle, bool spinRight, double speed, bool waitComp) {
   double rotations = (turnCirc * (spinAngle / 360.0)) / wheelCirc;
 
   if (!spinRight) {
@@ -55,12 +50,100 @@ void spinRobot(double spinAngle, bool spinRight, double speed, bool waitComp = t
 
 }
 
+void intake() {
+  LeftIntake.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+  RightIntake.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+}
+
+void outake(int speed) {
+  LeftIntake.spin(vex::directionType::rev, speed, vex::velocityUnits::pct);
+  RightIntake.spin(vex::directionType::rev, speed, vex::velocityUnits::pct);
+}
+
+void index() {
+  BottomRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+  TopRoller.spin(vex::directionType::rev, 100, vex::velocityUnits::pct);
+}
+
+void runBottomRoller() {
+  BottomRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+}
+
+void shoot() {
+  TopRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+}
+
+void brakeMotor(vex::motor motorname) {
+  motorname.stop(vex::brakeType::coast);
+}
+
 void progSkills() {
-  startInitTopProg.broadcast();
+  //startInitTopProg.broadcast();
+  release(); // deploy intakes / hood
+
+  vex::motor motors[] = {LeftFront, LeftRear, RightFront, RightRear};
+
+  // line up with ball, spin to correct curved strafe
+  strafeRightPid(12.5);
+  spinRobot(20, false, 20);
+
+  // get ready to intake ball, move preload up to make space
+  BottomRoller.spinFor(700, msec, 100, vex::velocityUnits::pct);
+  intake();
+
+  // move slowly to intake, then go fast to move
+  move(15, 35, true);
+  straightPid(23);
+
+  // spin to corner goal, stop intaking
+  spinRobot(30, false, 50);
+  brakeMotor(RightIntake);
+  brakeMotor(LeftIntake);
+
+  // move to corner goal
+  move(8, 50, true);
+
+  // shoot and move second ball up
+  runBottomRoller();
+  shoot();
+
+  wait(700, msec);
+
+  // stop before launching second ball, don't intake blues
+  brakeMotor(TopRoller);
+  brakeMotor(LeftIntake);
+  brakeMotor(RightIntake);
+  brakeMotor(BottomRoller);
+
+  wait(200, msec);
+
+  //intake();
+  //runBottomRoller();
+
+
+  /*
+  spinMotor(TopRoller, 10);
+
+  while(topSensorInitProg - topSensor.value(vex::analogUnits::range12bit) < 30) {
+    wait(10, msec);
+  }
+
+  brakeMotor(TopRoller);*/
+
+  move(-15, 50);
+
+  strafeRightPid(20);
+  
+
+  wait(5000, msec);
+;
+
+}
+
+void progSkillsCenter() {
+  //startInitTopProg.broadcast();
     
-  TopRoller.spinFor(180, vex::rotationUnits::deg, 20, vex::velocityUnits::pct, false);
-  RightIntake.spinFor(180, vex::rotationUnits::deg, 20, vex::velocityUnits::pct, false);
-  LeftIntake.spinFor(180, vex::rotationUnits::deg, 20, vex::velocityUnits::pct, false);
+  release();
   
   wait(500, msec);
 
