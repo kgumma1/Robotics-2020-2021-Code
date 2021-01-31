@@ -57,7 +57,7 @@ double accelCap(double num, double currVelocity, bool active) {
   // higher cap = less sluggish, more drift/spin
   // lower cap = effects of accelSpeed are magnified
 
-  /* accelSped */
+  /* accelSpeed */
   // keep in range 1 - 15
   // changes the speed of acceleration
   // higher number = accelerate faster, may drift/spin
