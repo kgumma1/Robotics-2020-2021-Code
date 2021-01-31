@@ -55,7 +55,7 @@ void intake() {
   RightIntake.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
 }
 
-void outake(int speed) {
+void outtake(int speed) {
   LeftIntake.spin(vex::directionType::rev, speed, vex::velocityUnits::pct);
   RightIntake.spin(vex::directionType::rev, speed, vex::velocityUnits::pct);
 }
@@ -70,7 +70,7 @@ void runBottomRoller() {
 }
 
 void shoot() {
-  TopRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+  TopRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
 }
 
 void brakeMotor(vex::motor motorname) {
@@ -78,6 +78,15 @@ void brakeMotor(vex::motor motorname) {
 }
 
 void progSkills() {
+  
+  int shootTimer = 0;
+  leftEncoder.resetRotation();
+  rightEncoder.resetRotation();
+  topSensorInit = topSensor.value(vex::analogUnits::range12bit);
+  bottomSensorInit = bottomSensor.value(vex::analogUnits::range12bit);
+  printf("TOPINIT = %ld, BOTTOMINIT = %ld\n", topSensorInit, bottomSensorInit);
+  printf("TOP = %ld, BOTTOM = %ld\n", topSensor.value(vex::analogUnits::range12bit), bottomSensor.value(vex::analogUnits::range12bit));
+
   //startInitTopProg.broadcast();
   release(); // deploy intakes / hood
 
@@ -85,7 +94,7 @@ void progSkills() {
 
   // line up with ball, spin to correct curved strafe
   strafeRightPid(12.5);
-  spinRobot(20, false, 20);
+  //spinRobot(15, false, 20);
 
   // get ready to intake ball, move preload up to make space
   BottomRoller.spinFor(700, msec, 100, vex::velocityUnits::pct);
@@ -96,18 +105,47 @@ void progSkills() {
   straightPid(23);
 
   // spin to corner goal, stop intaking
-  spinRobot(30, false, 50);
+  spinRobot(45, false, 50);
   brakeMotor(RightIntake);
   brakeMotor(LeftIntake);
 
   // move to corner goal
-  move(8, 50, true);
+  move(12.5, 35, true);
+  LeftFront.spinFor(250, msec, 50, vex::velocityUnits::pct);
+  LeftRear.spinFor(250, msec, 50, vex::velocityUnits::pct);
+  RightFront.spinFor(250, msec, 50, vex::velocityUnits::pct);
+  RightRear.spinFor(250, msec, 50, vex::velocityUnits::pct);
+
+
+  /*
+    LeftFront.spin(vex::directionType::fwd, 70, vex::velocityUnits::pct);
+  LeftRear.spin(vex::directionType::fwd, 70, vex::velocityUnits::pct);
+  RightFront.spin(vex::directionType::fwd, 70, vex::velocityUnits::pct);
+  RightRear.spin(vex::directionType::fwd, 70, vex::velocityUnits::pct);
+  wait(200, msec);
+  while(LeftFront.velocity(vex::velocityUnits::pct) > 20) {
+    continue;
+  }
+  brakeMotor(LeftFront);
+  brakeMotor(LeftRear);
+  brakeMotor(RightFront);
+  brakeMotor(RightRear);*/
 
   // shoot and move second ball up
   runBottomRoller();
   shoot();
+  shootTimer = 0;
+  printf("currval = %ld\n", topSensor.value(vex::analogUnits::range12bit));
+  while (topSensor.value(vex::analogUnits::range12bit)  > topSensorInit - 20) {
+    shootTimer++;
+    if (shootTimer > 5000) {
+      break;
+    }
+    wait(1, msec);
+    printf("currval = %ld\n", topSensor.value(vex::analogUnits::range12bit));
+  }
 
-  wait(700, msec);
+  wait(250, msec);
 
   // stop before launching second ball, don't intake blues
   brakeMotor(TopRoller);
@@ -115,7 +153,10 @@ void progSkills() {
   brakeMotor(RightIntake);
   brakeMotor(BottomRoller);
 
+
   wait(200, msec);
+  TopRoller.stop(vex::brakeType::hold);
+
 
   //intake();
   //runBottomRoller();
@@ -130,12 +171,145 @@ void progSkills() {
 
   brakeMotor(TopRoller);*/
 
-  move(-15, 50);
+  move(-20, 50);
+  wait(100, msec);
+/*
+  while(abs(leftEncoder.value()-abs(rightEncoder)) > 10) {
+    LeftFront.spin(vex::directionType::fwd, 10, vex::velocityUnits::pct);
+    LeftRear.spin(vex::directionType::fwd, 10, vex::velocityUnits::pct);
+    RightFront.spin(vex::directionType::fwd, -10, vex::velocityUnits::pct);
+    RightRear.spin(vex::directionType::fwd, -10, vex::velocityUnits::pct);
+  }*/
 
-  strafeRightPid(20);
+  spinRobot(25, true, 20);
+
+  brakeMotor(LeftFront);
+  brakeMotor(LeftRear);
+  brakeMotor(RightFront);
+  brakeMotor(RightRear);
+
+  wait(100, msec);
+  strafeRightPid(18);
+
+  wait(100, msec);
+  intake();
+  runBottomRoller();
+  TopRoller.stop(vex::brakeType::hold);
   
+  move(13, 35);
 
-  wait(5000, msec);
+  wait(1000, msec);
+
+  move(-12, 50);
+
+
+  brakeMotor(BottomRoller);
+  brakeMotor(LeftIntake);
+  brakeMotor(RightIntake);
+
+  wait(100, msec);
+
+  strafeRightPid(46);
+  wait(100, msec);
+  spinRobot(25, false, 20);
+  wait(100, msec);
+
+  move(15, 50);
+
+  runBottomRoller();
+  shoot();
+  shootTimer = 0;
+  printf("currval2 = %ld\n", topSensor.value(vex::analogUnits::range12bit));
+  while (topSensor.value(vex::analogUnits::range12bit)  > topSensorInit - 20) {
+    shootTimer++;
+    if (shootTimer > 5000) {
+      break;
+    }
+    wait(1, msec);
+    printf("currval2 = %ld\n", topSensor.value(vex::analogUnits::range12bit));
+  }
+
+  brakeMotor(BottomRoller);
+
+  wait(500, msec);
+
+  TopRoller.stop(vex::brakeType::hold);
+
+
+  move(-13, 50);
+
+  spinRobot(25, true, 30);
+
+  wait(100, msec);
+
+  strafeRightPid(57);
+
+  wait(100, msec);
+  //spinRobot(37, true, 50);
+  wait(100, msec);
+
+  TopRoller.stop(vex::brakeType::hold);
+  /*intake();
+  runBottomRoller();
+
+  move(11, 50);
+
+  wait(500, msec);
+
+  brakeMotor(BottomRoller);
+  brakeMotor(LeftIntake);
+  brakeMotor(RightIntake);
+
+  move(-20, 50);*/
+  //move(-10, 50);
+
+  wait(100, msec);
+
+  //spinRobot(25, true, 50);
+
+  wait(100, msec);
+  outtake(100);
+
+  move(33, 50);
+
+  brakeMotor(LeftIntake);
+  brakeMotor(RightIntake);
+  wait(100, msec);
+
+  runBottomRoller();
+  shoot();
+  shootTimer = 0;
+  while (topSensor.value(vex::analogUnits::range12bit)  > topSensorInit - 20) {
+    shootTimer++;
+    if (shootTimer > 5000) {
+      break;
+    }
+    wait(1, msec);
+  }
+
+  brakeMotor(BottomRoller);
+
+  wait(500, msec);
+
+  TopRoller.stop(vex::brakeType::hold);
+
+  move(-30, 50);
+
+  wait(100, msec);
+
+  spinRobot(190, true, 40);
+
+  wait(100, msec);
+
+  move(30, 50);
+
+  spinRobot(50, true, 20);
+
+  wait(100, msec);
+
+  move(40, 50);
+
+  wait(2000, msec);
 ;
 
 }
@@ -180,4 +354,14 @@ void progSkillsCenter() {
 
 
   wait(5000, msec);
+}
+
+void progSkillsCenAd() {
+  //startInitTopProg.broadcast();
+    
+  release();
+  outtake(100);
+  move(70, 20);
+
+  
 }

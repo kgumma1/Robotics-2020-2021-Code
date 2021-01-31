@@ -11,7 +11,7 @@ void release() {
 }
 
 void auton() {
-  int autonSelect = 0;
+  int autonSelect = 3;
   if(autonSelect == 0) {
     testing();
   }
@@ -20,6 +20,9 @@ void auton() {
   }
   if(autonSelect == 2) {
     progSkillsCenter();
+  }
+  if(autonSelect == 3) {
+    progSkillsCenAd();
   }
   
 }

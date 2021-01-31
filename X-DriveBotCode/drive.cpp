@@ -110,9 +110,9 @@ void drive() {
 
   double reductionAmount = 0;
   double speedLF = getMotorSpeed(LeftFront);
-  double speedLR = getMotorSpeed(LeftFront);
-  double speedRF = getMotorSpeed(LeftFront);
-  double speedRR = getMotorSpeed(LeftFront);
+  double speedLR = getMotorSpeed(LeftRear);
+  double speedRF = getMotorSpeed(RightFront);
+  double speedRR = getMotorSpeed(RightRear);
 
   double splineLF = 1;
   double splineLR = 1;
@@ -229,22 +229,22 @@ void drive() {
     
     if (speedLF > speedRR) {
       reductionAmount = (speedLF / speedRR) - 1;
-      spinMotor(LeftFront, powerRightGroup * reductionAmount * splineLF);
-      spinMotor(RightRear, powerRightGroup * splineRR);
+      spinMotor(LeftFront, powerRightGroup * reductionAmount);
+      spinMotor(RightRear, powerRightGroup);
     } else {
       reductionAmount = (speedRR / speedLF) - 1;
-      spinMotor(LeftFront, powerRightGroup * splineLF);
-      spinMotor(RightRear, powerRightGroup * reductionAmount * splineRR);
+      spinMotor(LeftFront, powerRightGroup);
+      spinMotor(RightRear, powerRightGroup * reductionAmount);
     }
 
     if (speedLR > speedRF) {
       reductionAmount = (speedLR / speedRF) - 1;
-      spinMotor(LeftRear, powerLeftGroup * reductionAmount * splineLR);
-      spinMotor(RightFront, powerLeftGroup * splineRF);      
+      spinMotor(LeftRear, powerLeftGroup * reductionAmount);
+      spinMotor(RightFront, powerLeftGroup);      
     } else {
       reductionAmount = (speedRF / speedLR) - 1;
-      spinMotor(LeftRear, powerLeftGroup * splineLR);
-      spinMotor(RightFront, powerLeftGroup * reductionAmount * splineRF);
+      spinMotor(LeftRear, powerLeftGroup);
+      spinMotor(RightFront, powerLeftGroup * reductionAmount);
     }
 
     //powerRightGroup = roundNum(powerRightGroup, 0, 10);

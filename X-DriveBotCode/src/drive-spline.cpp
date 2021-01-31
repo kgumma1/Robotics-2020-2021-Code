@@ -48,6 +48,26 @@ double round100(double num) {
   }
 }
 
+double accelCap(double num, double currVelocity, bool active) {
+  double cap = 1.2;
+  double accelSpeed = 8;
+  if (num > 0 && active) {
+    if (num > currVelocity * cap) {
+      return (currVelocity + accelSpeed) * cap;
+    } else {
+      return num;
+    }
+  } else if (active) {
+    if (num < currVelocity * cap) {
+      return (currVelocity - accelSpeed) * cap;
+    } else {
+      return num;
+    }
+  } else {
+    return num;
+  }
+}
+
 void drive() {
   
   //update stick positions
@@ -60,6 +80,12 @@ void drive() {
   double powerReduction = 1;
 
   powerReduction = expFunction( sqrt( pow(leftStickX, 2) + pow(leftStickY, 2) ) ) / 100;
+
+  double reductionAmount = 0;
+  double speedLF = getMotorSpeed(LeftFront);
+  double speedLR = getMotorSpeed(LeftRear);
+  double speedRF = getMotorSpeed(RightFront);
+  double speedRR = getMotorSpeed(RightRear);
 
 
   
@@ -93,11 +119,76 @@ void drive() {
 
     }
 
+
+    bool notspinning = false;
+    if (rightStickX == 0) {
+      notspinning = true;
+    }
+
+    bool goingStraight = false;
+    if (leftStickX == 0) {
+      goingStraight = true;
+    }
+
+    double inputLF = accelCap(round100(powerRightGroup + rightStickX), speedLF, notspinning);
+    double inputRR = accelCap(round100(powerRightGroup - rightStickX), speedRR, notspinning);
+    double inputLR = accelCap(round100(powerLeftGroup + rightStickX), speedLR, notspinning);
+    double inputRF = accelCap(round100(powerLeftGroup - rightStickX), speedRF, notspinning);
+
+
+    /*
+    double motorvalues[] = {speedLF, speedRR, speedLR, speedRF};
+
+    double min = 100;
+    double max = -100;
+
+    for (int i = 0; i < 4; i++) {
+      if (motorvalues[i] > max) {
+          max = motorvalues[i];
+      }
+      if (motorvalues[i] < min) {
+          min = motorvalues[i];
+      }
+    }
+
+    int threshold = 5;
+    if (goingStraight && min > 0) {
+      if (speedLF > min + threshold) {
+        inputLF = min/inputLF;
+      }
+      if (speedLR > min + threshold) {
+        inputLR = min/inputLR;
+      }
+      if (speedRR > min + threshold) {
+        inputRR = min/inputRR;
+      }
+      if (speedRF > min + threshold) {
+        inputRF = min/inputRF;
+      }      
+    } else if (goingStraight) {
+      if (speedLF < max - threshold) {
+        inputLF = max/inputLF;
+      }
+      if (speedLR < max - threshold) {
+        inputLR = max/inputLR;
+      }
+      if (speedRR < max - threshold) {
+        inputRR = max/inputRR;
+      }
+      if (speedRF < max - threshold) {
+        inputRF = max/inputRF;
+      }      
+    }*/
+
+    spinMotor(LeftFront, inputLF);
+    spinMotor(RightRear, inputRR);
+    spinMotor(LeftRear, inputLR);
+    spinMotor(RightFront, inputRF);
     
-    spinMotor(LeftFront, round100(powerRightGroup + rightStickX));
-    spinMotor(RightRear, round100(powerRightGroup - rightStickX));
-    spinMotor(LeftRear, round100(powerLeftGroup + rightStickX));
-    spinMotor(RightFront, round100(powerLeftGroup - rightStickX));
+
+
+
+
   } else {
     LeftFront.stop(vex::brakeType::coast);
     RightFront.stop(vex::brakeType::coast);

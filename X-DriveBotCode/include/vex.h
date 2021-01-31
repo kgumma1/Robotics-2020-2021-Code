@@ -37,8 +37,8 @@ extern const double PI;
 extern double turnCirc;
 extern double wheelCirc;
 
-extern int bottomSensorInit;
-extern int topSensorInit;
+extern long bottomSensorInit;
+extern long topSensorInit;
 
 void testing();
 
@@ -64,6 +64,7 @@ void movePid (double distances[], vex::motor motornames[], int numElements);
 void straightPid(double length);
 void strafeRightPid(double length);
 void turnRightPid(double spinAngle);
+void progSkillsCenAd();
 
 
 #define waitUntil(condition)                                                   \

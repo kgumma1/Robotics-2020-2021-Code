@@ -14,6 +14,8 @@
 // bottomSensor         line          E               
 // leftEncoder          encoder       A, B            
 // rightEncoder         encoder       G, H            
+// middleSensor         limit         C               
+// Vision11             vision        11              
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 //#include "setup.cpp"
@@ -53,8 +55,8 @@ vex::controller ct;
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
-int topSensorInit = 0;
-int bottomSensorInit = 0;
+long topSensorInit = 0;
+long bottomSensorInit = 0;
 
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
@@ -65,6 +67,7 @@ void pre_auton(void) {
   wait(7000, msec);
   topSensorInit = topSensor.value(vex::analogUnits::range12bit);
   bottomSensorInit = bottomSensor.value(vex::analogUnits::range12bit);
+  Brain.Screen.printAt(50, 50, "TOP = %ld, BOTTOM = %ld", topSensor.value(vex::analogUnits::range12bit), bottomSensor.value(vex::analogUnits::range12bit));
 }
 
 /*---------------------------------------------------------------------------*/
@@ -118,9 +121,10 @@ void usercontrol(void) {
   //startInitTop.broadcast();
 
   while (1) {
+    /*
     if(ct.ButtonLeft.pressing()) {
       auton();
-    }
+    }*/
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.

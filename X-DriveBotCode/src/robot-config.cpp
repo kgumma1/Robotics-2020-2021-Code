@@ -12,6 +12,10 @@ line topSensor = line(Brain.ThreeWirePort.D);
 line bottomSensor = line(Brain.ThreeWirePort.E);
 encoder leftEncoder = encoder(Brain.ThreeWirePort.A);
 encoder rightEncoder = encoder(Brain.ThreeWirePort.G);
+limit middleSensor = limit(Brain.ThreeWirePort.C);
+/*vex-vision-config:begin*/
+vision Vision11 = vision (PORT11, 50);
+/*vex-vision-config:end*/
 
 // VEXcode generated functions
 
