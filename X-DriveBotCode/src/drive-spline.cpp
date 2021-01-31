@@ -49,7 +49,23 @@ double round100(double num) {
 }
 
 double accelCap(double num, double currVelocity, bool active) {
-  double cap = 1.2;
+  /* cap */
+  // keep in range 1.0 - 1.7
+  // changes how much of a difference in speed and wanted speed
+  // is required in order to activate acceleration or just run
+  // the motor at wanted speed
+  // higher cap = less sluggish, more drift/spin
+  // lower cap = effects of accelSpeed are magnified
+
+  /* accelSped */
+  // keep in range 1 - 15
+  // changes the speed of acceleration
+  // higher number = accelerate faster, may drift/spin
+  // lower number = more sluggish, less drift/spin 
+
+  // reccomendation - only mess with accelSpeed
+
+  double cap = 1.2; 
   double accelSpeed = 8;
   if (num > 0 && active) {
     if (num > currVelocity * cap) {
