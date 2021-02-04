@@ -49,6 +49,7 @@ double round100(double num) {
 }
 
 double accelCap(double num, double currVelocity, bool active) {
+  return num;
   /* cap */
   // keep in range 1.0 - 1.7
   // changes how much of a difference in speed and wanted speed
@@ -142,7 +143,7 @@ void drive() {
     }
 
     bool goingStraight = false;
-    if (leftStickX == 0) {
+    if (leftStickX == 0 && rightStickX == 0) {
       goingStraight = true;
     }
 
@@ -196,10 +197,32 @@ void drive() {
       }      
     }*/
 
-    spinMotor(LeftFront, inputLF);
-    spinMotor(RightRear, inputRR);
-    spinMotor(LeftRear, inputLR);
-    spinMotor(RightFront, inputRF);
+    vex::motor motors[] = {LeftFront, RightFront, RightRear, LeftRear};
+    
+    int min = 100;
+    for (int i = 0; i < 4; i++) {
+      double speed = getMotorSpeed(motors[i]);
+      if (fabs(speed) < min) {
+        min = fabs(speed);
+      }
+    }
+
+    double changedSpeeds[] = {inputLF, inputRF, inputRR, inputLR};
+
+    if (goingStraight) {
+      for (int i = 0; i < 4; i++) {
+        double speed = getMotorSpeed(motors[i]);
+        if (fabs(speed) > min + 5) {
+          changedSpeeds[i] = changedSpeeds[i] * (min / (changedSpeeds[i]));
+        }
+      }
+    }
+
+    spinMotor(LeftFront, changedSpeeds[0]);
+    spinMotor(RightFront, changedSpeeds[1]);
+    spinMotor(RightRear, changedSpeeds[2]);
+    spinMotor(LeftRear, changedSpeeds[3]);
+
     
 
 

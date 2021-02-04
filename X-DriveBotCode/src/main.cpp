@@ -15,7 +15,7 @@
 // leftEncoder          encoder       A, B            
 // rightEncoder         encoder       G, H            
 // middleSensor         limit         C               
-// Vision11             vision        11              
+// topSensorNew         optical       9               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 //#include "setup.cpp"
