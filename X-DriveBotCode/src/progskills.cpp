@@ -37,7 +37,7 @@ void move(double length, double speed, bool waitComp) {
   RightRear.spinFor(length / 19.75, vex::rotationUnits::rev, speed, vex::velocityUnits::pct, waitComp);
 }
 
-void strafe(double length, double speed, bool waitComp = true) {
+void strafeRight(double length, double speed, bool waitComp = true) {
   
   LeftFront.spinFor(length / 19.75, vex::rotationUnits::rev, speed, vex::velocityUnits::pct, false);
   LeftRear.spinFor(-length / 19.75, vex::rotationUnits::rev, speed, vex::velocityUnits::pct, false);
@@ -112,6 +112,7 @@ void progSkills() {
 
   //startInitTopProg.broadcast();
   release(); // deploy intakes / hood
+  wait(300, msec);
 
   vex::motor motors[] = {LeftFront, LeftRear, RightFront, RightRear};
 
@@ -124,7 +125,7 @@ void progSkills() {
 
   // move slowly to intake, then go fast to move
   move(15, 35, true);
-  move(20, 60, true);
+  move(18, 60, true);
 
   // spin to corner goal
   spinRobot(75, false, 50);
@@ -160,7 +161,8 @@ void progSkills() {
 
   // shoot
   runBottomRoller();
-  shoot();
+  TopRoller.spin(vex::directionType::fwd, 80, vex::velocityUnits::pct);
+
   shootTimer = 0;
   printf("currval = %ld\n", topSensor.value(vex::analogUnits::range12bit));
   while (!topSensorNew.isNearObject()) {
@@ -223,28 +225,31 @@ void progSkills() {
   runBottomRoller();
   TopRoller.stop(vex::brakeType::hold);
   
-  move(17, 35);
+  move(18, 35);
 
   wait(1000, msec);
 
   // back out and spin to align with ball right in front of edge goal
-  move(-9, 50);
+  BottomRoller.spin(vex::directionType::fwd, 60, vex::velocityUnits::pct);
+  wait(100, msec);
+  move(-8, 50);
   wait(100, msec);
 
   spinRobot(90, true, 30);
 
   // move loaded ball up to make space for next
-  shoot();
+  TopRoller.spin(vex::directionType::fwd, 60, vex::velocityUnits::pct);
 
   while (!topSensorNew.isNearObject()) {
 
   }
+  wait(100, msec);
   TopRoller.stop(vex::brakeType::hold);
   wait(100, msec);
   // move to the next ball
   stopRollersEvent.broadcast();
 
-  move(41, 40);
+  move(40, 40);
 
   wait(300, msec);
   brakeMotor(LeftIntake);
@@ -254,10 +259,232 @@ void progSkills() {
   move(7, 50);
   align.broadcast();
   wait(500, msec);
+
+
+  TopRoller.spinFor(500, msec, -50, vex::velocityUnits::pct);
   shoot();
-  wait(1000, msec);
-  brakeMotor(TopRoller);
+  runBottomRoller();
+
+  while(!topSensorNew.isNearObject()){
+
+  }
+  brakeMotor(BottomRoller);
+
+  wait(400, msec);
+
+  TopRoller.stop(vex::brakeType::hold);
   
+  wait(300, msec);
+
+  TopRoller.spinFor(500, msec, -50, vex::velocityUnits::pct);
+
+  move(-10, 50);
+
+  strafeRight(36, 40);
+
+  intake();
+  runBottomRoller();
+
+  move(19, 40);
+
+  wait(300, msec);
+
+  BottomRoller.spin(vex::directionType::fwd, 60, vex::velocityUnits::pct);
+
+  TopRoller.spin(vex::directionType::fwd, 60, vex::velocityUnits::pct);
+
+  while (!topSensorNew.isNearObject()) {
+
+  }
+  TopRoller.stop(vex::brakeType::hold);
+  wait(100, msec);
+  stopRollersEvent.broadcast();
+  wait(100, msec);
+
+  RightFront.spinFor(200, msec, 50, vex::velocityUnits::pct);
+  LeftRear.spinFor(200, msec, 50, vex::velocityUnits::pct);
+
+  wait(100, msec);
+
+
+  move(-29, 30);
+
+  brakeMotor(LeftIntake);
+  brakeMotor(RightIntake);
+  brakeMotor(BottomRoller);
+
+  spinRobot(42, true, 30);
+
+  wait(100, msec);
+
+  outtake(30);
+
+  move(44, 50);
+
+
+
+  align.broadcast();
+
+  wait(500, msec);
+
+  shoot();
+
+  while (!topSensorNew.isNearObject()) {
+
+  }
+
+  wait(350, msec);
+  TopRoller.stop(vex::brakeType::hold);
+
+  wait(100, msec);
+
+  move(-27, 40);
+
+  brakeMotor(LeftIntake);
+  brakeMotor(RightIntake);
+
+  wait(100, msec);
+
+  spinRobot(52, true, 30);
+
+  wait(100, msec);
+
+  strafeRight(41, 60);
+
+  wait(100, msec);
+
+  move(7, 40);
+
+  wait(100, msec);
+
+  align.broadcast();
+
+  wait(600, msec);
+
+  shoot();
+
+  runBottomRoller();
+
+  while (!topSensorNew.isNearObject()) {
+
+  }
+
+  wait(300, msec);
+
+  TopRoller.stop(vex::brakeType::hold);
+  BottomRoller.stop(vex::brakeType::hold);
+
+  wait(100, msec);
+
+  move(-7, 40);
+
+  wait(100, msec);
+
+  spinRobot(93, true, 30);
+
+  wait(100, msec);
+
+  intake();
+
+  runBottomRoller();
+
+  move(44, 40);
+
+  wait(500, msec);
+
+  brakeMotor(BottomRoller);
+  brakeMotor(RightIntake);
+  brakeMotor(LeftIntake);
+
+
+
+  spinRobot(45, false, 30);
+
+  wait(100, msec);
+
+  move(15, 40);
+
+  wait(200, msec);
+
+  align.broadcast();
+
+  wait(600, msec);
+
+  shoot();
+
+  runBottomRoller();
+
+  while (!topSensorNew.isNearObject()) {
+
+  }
+
+  wait(300, msec);
+
+  TopRoller.stop(vex::brakeType::hold);
+  BottomRoller.stop(vex::brakeType::hold);
+
+  wait(100, msec);
+
+  move(-29, 40);
+
+  wait(100, msec);
+
+  spinRobot(45, true, 30);
+
+   // spin to align to ball on wall
+
+  brakeMotor(LeftFront);
+  brakeMotor(LeftRear);
+  brakeMotor(RightFront);
+  brakeMotor(RightRear);
+
+  // intake and move to ball on wall
+  wait(100, msec);
+  intake();
+  runBottomRoller();
+  TopRoller.stop(vex::brakeType::hold);
+  
+  move(23, 35);
+
+  wait(1000, msec);
+
+  brakeMotor(RightIntake);
+  brakeMotor(LeftIntake);
+
+  move(-66, 40);
+
+  wait(100, msec);
+
+  spinRobot(90, true, 30);
+
+  wait(200, msec);
+
+  move(37, 40);
+
+  move(-7, 20);
+
+  move(5, 20);
+
+  align.broadcast();
+
+  wait(600, msec);
+
+  shoot();
+
+  runBottomRoller();
+
+  while (!topSensorNew.isNearObject()) {
+
+  }
+
+  wait(300, msec);
+
+  TopRoller.stop(vex::brakeType::hold);
+  BottomRoller.stop(vex::brakeType::hold);
+
+  wait(100, msec);
+
+  // move to the next ball
   /*
   brakeMotor(BottomRoller);
   brakeMotor(LeftIntake);

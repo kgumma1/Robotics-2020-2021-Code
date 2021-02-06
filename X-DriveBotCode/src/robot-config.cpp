@@ -14,6 +14,7 @@ encoder leftEncoder = encoder(Brain.ThreeWirePort.A);
 encoder rightEncoder = encoder(Brain.ThreeWirePort.G);
 limit middleSensor = limit(Brain.ThreeWirePort.C);
 optical topSensorNew = optical(PORT9);
+distance bottomSensorNew = distance(PORT20);
 
 // VEXcode generated functions
 

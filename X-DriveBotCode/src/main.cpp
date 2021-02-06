@@ -16,6 +16,7 @@
 // rightEncoder         encoder       G, H            
 // middleSensor         limit         C               
 // topSensorNew         optical       9               
+// bottomSensorNew      distance      20              
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 //#include "setup.cpp"
@@ -30,7 +31,7 @@ competition Competition;
 
 // define your global instances of motors and other devices here
 
-vex::motor LeftFront(vex::PORT5, true);
+vex::motor LeftFront(vex::PORT11, true);
 vex::motor LeftRear(vex::PORT4, true);
 vex::motor RightFront(vex::PORT8);
 vex::motor RightRear(vex::PORT10);
