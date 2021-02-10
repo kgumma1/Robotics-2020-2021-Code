@@ -120,7 +120,7 @@ void autonomous(void) {
 void usercontrol(void) {
   // User control code here, inside the loop
   //startInitTop.broadcast();
-
+  auton();
   while (1) {
     /*
     if(ct.ButtonLeft.pressing()) {

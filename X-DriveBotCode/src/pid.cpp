@@ -2,89 +2,98 @@
 
 using namespace vex;
 
-void straightPid(double length) {
-  double distances[] = {length, length, length, length};
-  vex::motor motornames[] = {LeftFront, LeftRear, RightFront, RightRear};
-  movePid(distances, motornames, 4);
-}
+void movePid (double distance, double maxSpeed) {
 
-void strafeRightPid(double length) {
-  double distances[] = {length, -length, -length, length};
-  vex::motor motornames[] = {LeftFront, LeftRear, RightFront, RightRear};
-  movePid(distances, motornames, 4);
-}
-
-void turnRightPid(double spinAngle) {
-  double length = (turnCirc * (spinAngle / 360.0)) / wheelCirc;
-  double distances[] = {length, length, -length, -length};
-  vex::motor motornames[] = {LeftFront, LeftRear, RightFront, RightRear};
-  movePid(distances, motornames, 4);
-}
-
-void movePid (double distances[], vex::motor motornames[], int numElements) {
-
-  double KP = 0.1225;
+  double KP = 0.17;
   double KI = 0;
-  double KD = 0;
-  int stopCounter = 0;
+  double KD = 0.5;
 
-  double errors[numElements];
-  double powers[numElements];
-  double integrals[numElements];
-  double derivatives[numElements];
-  double prevErrors[numElements];
+  // 0 position = left encoder, 1 position = right encoder
+  double errors[2];
+  double powers[2];
+  double integrals[2];
+  double derivatives[2];
+  double prevErrors[2];
 
-  for (int i = 0; i < numElements; i++) {
-    motornames[i].resetPosition();
-  }
+  distance = (distance / 19.75) * 720;
 
-  for (int i = 0; i < numElements; i++) {
-    distances[i] = (distances[i] / 19.75) * 900;
-  }
+  prevErrors[0] = (distance / 19.75) * 360;
+  prevErrors[1] = (distance / 19.75) * 360;
 
-  for (int i = 0; i < numElements; i++) {
-    prevErrors[i] = motornames[i].position(vex::rotationUnits::raw);
-  }
+  leftEncoder.resetRotation();
+  rightEncoder.resetRotation();
 
-  
-  while (1) {
-    for (int i = 0; i < numElements; i++) {
-      errors[i] = distances[i] - motornames[i].position(vex::rotationUnits::raw);
+  errors[0] = distance - leftEncoder.position(vex::rotationUnits::deg);
+  errors[1] = distance - rightEncoder.position(vex::rotationUnits::deg);
 
-      integrals[i] = integrals[i] + errors[i];
 
-      if (distances[i] >= 0) {
-        if (errors[i] <= 0) {
-          integrals[i] = 0;
+  while (fabs(errors[0] + errors[1]) > 20) {
+      ///*
+      errors[0] = distance - leftEncoder.position(vex::rotationUnits::deg);
+      errors[1] = distance - rightEncoder.position(vex::rotationUnits::deg);
+      //*/
+      // alt
+      /*
+      errors[0] = distance - (leftEncoder.position(vex::rotationUnits::deg) + rightEncoder.position(vex::rotationUnits::deg)) / 2;
+      errors[1] = distance - (leftEncoder.position(vex::rotationUnits::deg) + rightEncoder.position(vex::rotationUnits::deg)) / 2;
+      */
+
+
+      integrals[0] = integrals[0] + errors[0];
+      integrals[1] = integrals[1] + errors[1];
+
+      if (distance >= 0) {
+        if (errors[0] <= 0) {
+          integrals[0] = 0;
         }
       } else {
-        if (errors[i] >= 0) {
-          integrals[i] = 0;
+        if (errors[0] >= 0) {
+          integrals[0] = 0;
         }
       }
 
-      if (fabs(errors[i]) / fabs(distances[i]) > 0.3) {
-        integrals[i] = 0;
+      if (distance >= 0) {
+        if (errors[1] <= 0) {
+          integrals[1] = 0;
+        }
+      } else {
+        if (errors[1] >= 0) {
+          integrals[1] = 0;
+        }
       }
 
-      derivatives[i] = errors[i] - prevErrors[i];
-
-      powers[i] = errors[i] * KP + integrals[i] * KI + derivatives[i] * KD;
-
-      motornames[i].spin(vex::directionType::fwd, powers[i], vex::velocityUnits::pct);
-
-      if (motornames[i].velocity(vex::velocityUnits::pct) <= 5 && fabs(errors[i]) / fabs(distances[i]) < 0.2) {
-        stopCounter++;
+      if (fabs(errors[0]) / fabs(distance) > 0.3) {
+        integrals[0] = 0;
       }
-    }
 
-    if(stopCounter == 4) {
-      return;
-    } else {
-      stopCounter = 0;
-    }
+      if (fabs(errors[1]) / fabs(distance) > 0.3) {
+        integrals[1] = 0;
+      }
 
+      derivatives[0] = errors[0] - prevErrors[0];
+      derivatives[1] = errors[1] - prevErrors[1];
 
+      prevErrors[0] = errors[0];
+      prevErrors[1] = errors[1];
+
+      powers[0] = errors[0] * KP + integrals[0] * KI + derivatives[0] * KD;
+      powers[1] = errors[1] * KP + integrals[1] * KI + derivatives[1] * KD;
+
+      if(powers[0] > maxSpeed) {
+        powers[0] = maxSpeed;
+      }
+      if(powers[1] > maxSpeed) {
+        powers[1] = maxSpeed;
+      }
+
+      LeftFront.spin(vex::directionType::fwd, powers[0], vex::velocityUnits::pct);
+      LeftRear.spin(vex::directionType::fwd, powers[0], vex::velocityUnits::pct);
+
+      RightFront.spin(vex::directionType::fwd, powers[1], vex::velocityUnits::pct);
+      RightRear.spin(vex::directionType::fwd, powers[1], vex::velocityUnits::pct);
+
+      
+    
 
     wait(15, msec);
 

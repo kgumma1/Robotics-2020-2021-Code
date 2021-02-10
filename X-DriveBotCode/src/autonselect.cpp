@@ -11,7 +11,7 @@ void release() {
 }
 
 void auton() {
-  int autonSelect = 1;
+  int autonSelect = 4;
   if(autonSelect == 0) {
     testing();
   }
@@ -23,6 +23,12 @@ void auton() {
   }
   if(autonSelect == 3) {
     progSkillsCenAd();
+  }
+  if(autonSelect == 4) {
+    autonSameColor();
+  }
+  if(autonSelect == 5) {
+    autonDifferentColor();
   }
   
 }

@@ -60,11 +60,14 @@ void progSkillsCenter();
 void release();
 void move(double length, double speed, bool waitComp = true);
 void spinRobot(double spinAngle, bool spinRight, double speed, bool waitComp = true);
-void movePid (double distances[], vex::motor motornames[], int numElements);
+void movePid (double distance, double maxSpeed = 100);
 void straightPid(double length);
 void strafeRightPid(double length);
 void turnRightPid(double spinAngle);
+void intake();
 void progSkillsCenAd();
+void autonSameColor();
+void autonDifferentColor();
 
 
 #define waitUntil(condition)                                                   \
