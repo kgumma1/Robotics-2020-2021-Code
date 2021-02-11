@@ -5,17 +5,12 @@ using namespace vex;
 // ball in front of starting position is alliance color
 void autonSameColor() {
   release();
-  movePid(35, 50);
-  spinRobot(70, true, 40);
+  movePid(24.5, 50);
+  spinRobot(70, false, 40);
   intake();
   BottomRoller.spin(vex::directionType::fwd, 50, vex::velocityUnits::pct);
-  movePid(25, 50);
-  wait(300, msec);
-  movePid(-30, 50);
 
-  spinRobot(45, false, 40);
-
-  movePid(10);
+  movePid(26, 30);
   TopRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
   BottomRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
 
@@ -24,27 +19,20 @@ void autonSameColor() {
   }
 
   TopRoller.stop(vex::brakeType::hold);
+
+  move(-10, 50);
 
 }
 
 // ball in front of starting position is not alliance color
 void autonDifferentColor() {
   release();
-  movePid(35, 50);
-  spinRobot(70, false, 40);
+  movePid(32, 30);
+  spinRobot(70, true, 40);
   intake();
-  BottomRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-  TopRoller.spin(vex::directionType::rev, 100, vex::velocityUnits::pct);
-  movePid(25, 50);
-  wait(300, msec);
-  movePid(-30, 50);
+  BottomRoller.spin(vex::directionType::fwd, 50, vex::velocityUnits::pct);
 
-  spinRobot(45, true, 40);
-  
-  TopRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-  BottomRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-
-  movePid(10);
+  movePid(10, 30);
   TopRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
   BottomRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
 
@@ -53,4 +41,7 @@ void autonDifferentColor() {
   }
 
   TopRoller.stop(vex::brakeType::hold);
+
+  move(-10, 50);
+
 }
