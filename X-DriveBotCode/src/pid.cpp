@@ -100,5 +100,11 @@ void movePid (double distance, double maxSpeed) {
   }
 
 
+  LeftFront.spin(vex::directionType::fwd, 0, vex::velocityUnits::pct);
+  LeftRear.spin(vex::directionType::fwd, 0, vex::velocityUnits::pct);
+
+  RightFront.spin(vex::directionType::fwd, 0, vex::velocityUnits::pct);
+  RightRear.spin(vex::directionType::fwd, 0, vex::velocityUnits::pct);
+
 
 }

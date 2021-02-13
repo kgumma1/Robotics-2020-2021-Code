@@ -65,6 +65,7 @@ void straightPid(double length);
 void strafeRightPid(double length);
 void turnRightPid(double spinAngle);
 void intake();
+void progSkillsNoPid();
 void progSkillsCenAd();
 void autonSameColor();
 void autonDifferentColor();

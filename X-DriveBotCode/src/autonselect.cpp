@@ -11,7 +11,7 @@ void release() {
 }
 
 void auton() {
-  int autonSelect = 5;
+  int autonSelect = 6;
   if(autonSelect == 0) {
     testing();
   }
@@ -29,6 +29,9 @@ void auton() {
   }
   if(autonSelect == 5) {
     autonDifferentColor();
+  }
+  if(autonSelect == 6) {
+    progSkillsNoPid();
   }
   
 }

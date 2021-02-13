@@ -32,7 +32,7 @@ void autonDifferentColor() {
   intake();
   BottomRoller.spin(vex::directionType::fwd, 50, vex::velocityUnits::pct);
 
-  movePid(10, 30);
+  movePid(13, 30);
   TopRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
   BottomRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
 
