@@ -69,6 +69,7 @@ void progSkillsNoPid();
 void progSkillsCenAd();
 void autonSameColor();
 void autonDifferentColor();
+void progSkillsWithPid();
 
 
 #define waitUntil(condition)                                                   \

@@ -17,6 +17,7 @@ void movePid (double distance, double maxSpeed) {
 
   distance = (distance / 19.75) * 720;
 
+//19.75 set constant that works 
   prevErrors[0] = (distance / 19.75) * 360;
   prevErrors[1] = (distance / 19.75) * 360;
 

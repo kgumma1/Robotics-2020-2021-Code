@@ -11,11 +11,7 @@ void spinMotor(vex::motor motorName, double speedPerc) {
   motorName.spin(vex::directionType::fwd, speedPerc, vex::velocityUnits::pct);
 }
 
-double calcPower(double val1, double val2, double powerReduction) {
-  double stickAngle;
-  stickAngle = atan(val1 / val2) * (180 / PI);
-  return ((stickAngle * PROPORTION_FACTOR) - 100) * powerReduction;
-}
+
 
 
 int isPos(double num) {
@@ -24,6 +20,15 @@ int isPos(double num) {
   } else {
     return -1;
   }
+}
+
+double calcPower(double val1, double val2, double powerReduction, int flipQuadrants = 1) {
+  double stickAngle;
+  if(fabs(val2) == 0) {
+    val2 = 1 * isPos(val2);
+  }
+  stickAngle = atan(val1 / val2) * (180 / PI);
+  return ((stickAngle * PROPORTION_FACTOR) - 100 * flipQuadrants) * powerReduction * flipQuadrants;
 }
 
 double expFunction(double num) {
@@ -48,6 +53,21 @@ double round100(double num) {
   }
 }
 
+double distanceFromOrigin(double x, double y) {
+  return sqrt( pow(x, 2) + pow(y, 2));
+}
+
+double calcPowerReduction(double leftStickX, double leftStickY) {
+  if(leftStickX == 0 && leftStickY == 0) {
+    return 0;
+  }
+  double maxX = 100 * cos(atan(leftStickY/leftStickX));
+  double maxY = 100 * sin(atan(leftStickY/leftStickX));
+
+
+  return expFunction( (distanceFromOrigin(leftStickX, leftStickY) / distanceFromOrigin(maxX, maxY)) * 100) / 100;
+}
+
 double accelCap(double num, double currVelocity, bool active) {
   return num;
   /* cap */
@@ -66,8 +86,8 @@ double accelCap(double num, double currVelocity, bool active) {
 
   // reccomendation - only mess with accelSpeed
 
-  double cap = 1.2; 
-  double accelSpeed = 8;
+  double cap = 1.5; 
+  double accelSpeed = 10;
   if (num > 0 && active) {
     if (num > currVelocity * cap) {
       return (currVelocity + accelSpeed) * cap;
@@ -85,6 +105,9 @@ double accelCap(double num, double currVelocity, bool active) {
   }
 }
 
+double encoderLeftInit = leftEncoder.position(vex::rotationUnits::deg);
+double encoderRightInit = rightEncoder.position(vex::rotationUnits::deg);
+
 void drive() {
   
   //update stick positions
@@ -96,7 +119,7 @@ void drive() {
   double powerRightGroup = 0;
   double powerReduction = 1;
 
-  powerReduction = expFunction( sqrt( pow(leftStickX, 2) + pow(leftStickY, 2) ) ) / 100;
+  powerReduction = calcPowerReduction(leftStickX, leftStickY);
 
   double reductionAmount = 0;
   double speedLF = getMotorSpeed(LeftFront);
@@ -106,8 +129,8 @@ void drive() {
 
 
   
-  if ((abs(leftStickX) >= 20 || abs(leftStickY) >= 20) || abs(rightStickX) > 5) {
-    if (abs(leftStickX) < 25) {
+  if ((abs(leftStickX) >= 10 || abs(leftStickY) >= 10) || abs(rightStickX) > 5) {
+    if (abs(leftStickX) < 10) {
       leftStickX = 0;
     }
 
@@ -115,7 +138,12 @@ void drive() {
       leftStickY = 0;
     }
 
-    rightStickX = expFunction(rightStickX) * isPos(rightStickX) / 2;
+    double turningSensitivity = 1.5;
+
+    if(leftStickX > 50 || leftStickY > 50) {
+      turningSensitivity = 1;
+    }
+    rightStickX = expFunction(rightStickX) * isPos(rightStickX) / turningSensitivity;
     
 
     if (leftStickX >= 0 && leftStickY >= 0) {
@@ -123,11 +151,11 @@ void drive() {
       powerRightGroup = 100 * powerReduction;
         
     } else if (leftStickX <= 0 && leftStickY >= 0) {
-      powerRightGroup = calcPower(leftStickY, leftStickX, powerReduction);
+      powerRightGroup = calcPower(leftStickY, leftStickX, powerReduction, -1);
       powerLeftGroup = 100 * powerReduction;
 
     } else if (leftStickX >= 0 && leftStickY <= 0) {
-      powerRightGroup = calcPower(leftStickX, leftStickY, powerReduction);
+      powerRightGroup = calcPower(leftStickX, leftStickY, powerReduction, -1);
       powerLeftGroup = -100 * powerReduction;
 
     } else if (leftStickX <= 0 && leftStickY <= 0) {
@@ -140,17 +168,23 @@ void drive() {
     bool notspinning = false;
     if (rightStickX == 0) {
       notspinning = true;
-    }
+    } 
+
 
     bool goingStraight = false;
     if (leftStickX == 0 && rightStickX == 0) {
       goingStraight = true;
+    } else {
+      encoderLeftInit = leftEncoder.position(vex::rotationUnits::deg);
+      encoderRightInit = rightEncoder.position(vex::rotationUnits::deg);
     }
 
-    double inputLF = accelCap(round100(powerRightGroup + rightStickX), speedLF, notspinning);
-    double inputRR = accelCap(round100(powerRightGroup - rightStickX), speedRR, notspinning);
-    double inputLR = accelCap(round100(powerLeftGroup + rightStickX), speedLR, notspinning);
-    double inputRF = accelCap(round100(powerLeftGroup - rightStickX), speedRF, notspinning);
+    printf("right = %f, left = %f\n", powerRightGroup, powerLeftGroup);
+
+    double inputLF = round100(powerRightGroup + rightStickX);
+    double inputRR = round100(powerRightGroup - rightStickX);
+    double inputLR = round100(powerLeftGroup + rightStickX);
+    double inputRF = round100(powerLeftGroup - rightStickX);
 
 
     /*
@@ -199,23 +233,32 @@ void drive() {
 
     vex::motor motors[] = {LeftFront, RightFront, RightRear, LeftRear};
     
-    int min = 100;
-    for (int i = 0; i < 4; i++) {
-      double speed = getMotorSpeed(motors[i]);
-      if (fabs(speed) < min) {
-        min = fabs(speed);
-      }
-    }
 
     double changedSpeeds[] = {inputLF, inputRF, inputRR, inputLR};
-
+/*
     if (goingStraight) {
-      for (int i = 0; i < 4; i++) {
-        double speed = getMotorSpeed(motors[i]);
-        if (fabs(speed) > min + 5) {
-          changedSpeeds[i] = changedSpeeds[i] * (min / (changedSpeeds[i]));
-        }
-      }
+      double correctionVal = (leftEncoder.position(vex::rotationUnits::deg) - rightEncoder.position(vex::rotationUnits::deg)) - (encoderLeftInit - encoderRightInit);
+
+      double scaleFactor = 0.01;
+
+      changedSpeeds[0] = inputLF + correctionVal * scaleFactor;
+      changedSpeeds[1] = inputRF - correctionVal * scaleFactor;
+      changedSpeeds[2] = inputRR - correctionVal * scaleFactor;
+      changedSpeeds[3] = inputLR + correctionVal * scaleFactor;
+
+
+
+    }*/
+
+    double smoothFactor = 1.5;
+    if(leftStickX > 50 || leftStickY > 50) {
+      smoothFactor = 0.5;
+    }
+
+    for (int i = 0; i < 4; i++) {
+      changedSpeeds[i] = (changedSpeeds[i] + (motors[i].velocity(vex::velocityUnits::pct) * smoothFactor)) / (smoothFactor + 1);
+
+      
     }
 
     spinMotor(LeftFront, changedSpeeds[0]);
