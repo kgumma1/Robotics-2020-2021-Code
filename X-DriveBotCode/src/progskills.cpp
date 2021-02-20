@@ -293,7 +293,7 @@ void progSkillsNoPid() {
     RightRear.spin(vex::directionType::fwd, -10, vex::velocityUnits::pct);
   }*/
   // spin to align to ball on wall
-  spinRobot(51, true, 20);
+  spinRobot(45, true, 20);
 
   brakeMotor(LeftFront);
   brakeMotor(LeftRear);
@@ -307,6 +307,7 @@ void progSkillsNoPid() {
   TopRoller.stop(vex::brakeType::hold);
   
   move(20, 45);
+
 /*
   RightFront.spinFor(400, msec, 50, vex::velocityUnits::pct);
   LeftRear.spinFor(400, msec, 50, vex::velocityUnits::pct);
@@ -318,7 +319,7 @@ void progSkillsNoPid() {
   // back out and spin to align with ball right in front of edge goal
   BottomRoller.spin(vex::directionType::fwd, 60, vex::velocityUnits::pct);
   wait(100, msec);
-  move(-2.5, 35); // to change
+  move(-3, 35); 
   wait(100, msec);
 
   spinRobot(90, true, 30);
@@ -334,7 +335,7 @@ void progSkillsNoPid() {
   wait(100, msec);
   // move to the next ball
 
-  move(38, 40);
+  move(41, 40);
 
   // make sure ball is intaked
   runBottomRoller(50);
@@ -377,7 +378,7 @@ void progSkillsNoPid() {
 
   wait(100, msec);
 
-  strafeRight(37, 30);
+  strafeRight(33, 30);
 
   BottomRoller.spin(vex::directionType::fwd, 60, vex::velocityUnits::pct);
   TopRoller.spin(vex::directionType::fwd, 60, vex::velocityUnits::pct);
@@ -389,7 +390,7 @@ void progSkillsNoPid() {
   // move forward and intake the ball, move the loaded ball up in slot to make space
   intake();
 
-  move(21, 40);
+  move(23, 40);
 
   BottomRoller.spin(vex::directionType::fwd, 60, vex::velocityUnits::pct);
 
@@ -431,7 +432,7 @@ void progSkillsNoPid() {
   // move to corner and align, and shoot
 
 
-  move(44, 60);
+  move(44, 50);
 
   align.broadcast();
   wait(250, msec);
@@ -469,7 +470,7 @@ void progSkillsNoPid() {
 
   align.broadcast();
 
-  wait(1700, msec);
+  wait(2000, msec);
 
   shoot();
 
@@ -521,7 +522,7 @@ void progSkillsNoPid() {
 
   move(30, 40);*/
 
-  move(54, 40);
+  move(56, 40);
 
   wait(500, msec);
 
@@ -585,7 +586,7 @@ void progSkillsNoPid() {
   BottomRoller.spin(vex::directionType::fwd, 50, vex::velocityUnits::pct);
   TopRoller.stop(vex::brakeType::hold);
   
-  move(23, 40);
+  move(26, 40);
 
   spinRobot(10, false, 30);
 
@@ -594,7 +595,7 @@ void progSkillsNoPid() {
 
 
   // move back and spin to align with center goal
-  move(-63, 50);
+  move(-65, 50);
 
   wait(100, msec);
 
@@ -632,7 +633,7 @@ void progSkillsNoPid() {
 
   wait(100, msec);
 
-  move(-15, 50);
+  move(-15, 100);
 
   // move to the next ball
   /*

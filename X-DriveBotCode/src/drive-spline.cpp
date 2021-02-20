@@ -138,9 +138,9 @@ void drive() {
       leftStickY = 0;
     }
 
-    double turningSensitivity = 1.5;
+    double turningSensitivity = 1.65;
 
-    if(leftStickX > 50 || leftStickY > 50) {
+    if(abs(leftStickX) > 50 || abs(leftStickY) > 50) {
       turningSensitivity = 1;
     }
     rightStickX = expFunction(rightStickX) * isPos(rightStickX) / turningSensitivity;
@@ -251,7 +251,7 @@ void drive() {
     }*/
 
     double smoothFactor = 1.5;
-    if(leftStickX > 50 || leftStickY > 50) {
+    if(abs(leftStickX) > 50 || abs(leftStickY) > 50) {
       smoothFactor = 0.5;
     }
 
