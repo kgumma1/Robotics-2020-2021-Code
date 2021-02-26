@@ -5,13 +5,13 @@ using namespace vex;
 void release() {
   
   TopRoller.spinFor(180, vex::rotationUnits::deg, 100, vex::velocityUnits::pct, false);
-  RightIntake.spinFor(180, vex::rotationUnits::deg, 100, vex::velocityUnits::pct, false);
-  LeftIntake.spinFor(180, vex::rotationUnits::deg, 100, vex::velocityUnits::pct, true);
+  RightIntake.spinFor(-180, vex::rotationUnits::deg, 100, vex::velocityUnits::pct, false);
+  LeftIntake.spinFor(-180, vex::rotationUnits::deg, 100, vex::velocityUnits::pct, true);
   
 }
 
 void auton() {
-  int autonSelect = 6;
+  int autonSelect = 9;
   if(autonSelect == 0) {
     testing();
   }
@@ -36,5 +36,10 @@ void auton() {
   if(autonSelect == 7) {
     progSkillsWithPid();
   }
-  
+  if(autonSelect == 8) {
+    autonRowBlue(true);
+  }
+  if(autonSelect == 9) {
+    autonRowRed();
+  }    
 }

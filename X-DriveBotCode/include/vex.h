@@ -41,6 +41,7 @@ extern long bottomSensorInit;
 extern long topSensorInit;
 
 void testing();
+void motorInfo();
 
 //drive file
 void spinMotor(vex::motor motorName, double speedPerc);
@@ -65,11 +66,16 @@ void straightPid(double length);
 void strafeRightPid(double length);
 void turnRightPid(double spinAngle);
 void intake();
+void outtake(int speed);
+void brakeMotor(vex::motor motorname);
 void progSkillsNoPid();
 void progSkillsCenAd();
 void autonSameColor();
 void autonDifferentColor();
 void progSkillsWithPid();
+void autonRowBlue(bool red);
+void autonRowRed();
+void strafeRight(double length, double speed, bool waitComp = true);
 
 
 #define waitUntil(condition)                                                   \

@@ -138,7 +138,7 @@ void drive() {
       leftStickY = 0;
     }
 
-    double turningSensitivity = 1.65;
+    double turningSensitivity = 1.7;
 
     if(abs(leftStickX) > 50 || abs(leftStickY) > 50) {
       turningSensitivity = 1;

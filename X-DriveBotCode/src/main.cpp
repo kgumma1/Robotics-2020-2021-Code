@@ -134,6 +134,8 @@ void usercontrol(void) {
     // update your motors, etc.
     // ........................................................................
 
+    motorInfo();
+
     drive();
 
     intakeDrive();
