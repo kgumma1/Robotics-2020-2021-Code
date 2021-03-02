@@ -87,7 +87,7 @@ void brakeMotor(vex::motor motorname) {
 }
 
 void alignRobot() {
-  move(20, 20);
+  move(20, 30);
 }
 
 vex::event align(alignRobot);
@@ -212,7 +212,7 @@ void progSkillsNoPid() {
   brakeMotor(LeftIntake);*/
 
   strafeRight(13, 35);
-  move(40.5, 35);
+  move(39, 50);
   spinRobot(63, false, 45);
   outtake(0);
   move(15, 70);
@@ -306,7 +306,7 @@ void progSkillsNoPid() {
   runBottomRoller();
   TopRoller.stop(vex::brakeType::hold);
   
-  move(20, 45);
+  move(21, 45);
 
 /*
   RightFront.spinFor(400, msec, 50, vex::velocityUnits::pct);
@@ -319,10 +319,10 @@ void progSkillsNoPid() {
   // back out and spin to align with ball right in front of edge goal
   BottomRoller.spin(vex::directionType::fwd, 60, vex::velocityUnits::pct);
   wait(100, msec);
-  move(-2, 35); 
+  move(-1, 35); 
   wait(100, msec);
 
-  spinRobot(93, true, 30);
+  spinRobot(90, true, 30);
 
   // move loaded ball up to make space for next
   TopRoller.spin(vex::directionType::fwd, 40, vex::velocityUnits::pct);
@@ -335,11 +335,20 @@ void progSkillsNoPid() {
   wait(100, msec);
   // move to the next ball
 
-  move(41.5, 50);
+  
+
+  movePid(34.5, 70);
+
+  movePid(-2, 30);
 
   // make sure ball is intaked
+  int rollerTimer = 0;
   runBottomRoller(50);
   while(bottomSensorNew.objectDistance(vex::distanceUnits::mm) > 40) {
+    rollerTimer++;
+    if (rollerTimer > 750) {
+      break;
+    }
 
   }
 
@@ -417,7 +426,7 @@ void progSkillsNoPid() {
 
   // move out and spin to align with goal
   intake();
-  move(-25.5, 30);
+  movePid(-22, 50);
 
   wait(500, msec);
 
@@ -425,7 +434,7 @@ void progSkillsNoPid() {
   brakeMotor(RightIntake);
   brakeMotor(BottomRoller);
 
-  spinRobot(45, true, 30);
+  spinRobot(47, true, 30);
 
   wait(100, msec);
 
@@ -442,7 +451,7 @@ void progSkillsNoPid() {
 
   }
 
-  wait(350, msec);
+  wait(450, msec);
   TopRoller.stop(vex::brakeType::hold);
   brakeMotor(LeftRear);
   brakeMotor(RightFront);
@@ -459,9 +468,11 @@ void progSkillsNoPid() {
 
 
 
-  strafeRight(63.5, 40);
+  strafeRight(64.5, 50);
 
   wait(100, msec);
+
+  spinRobot(10, false, 30);
 
   // move into goal, align, shoot
   move(5, 60);
@@ -470,7 +481,7 @@ void progSkillsNoPid() {
 
   align.broadcast();
 
-  wait(2500, msec);
+  wait(2000, msec);
 
   shoot();
 
@@ -492,7 +503,7 @@ void progSkillsNoPid() {
 
   wait(90, msec);
 
-  spinRobot(90, true, 30);
+  spinRobot(82, true, 30);
 
   wait(100, msec);
 
@@ -522,7 +533,8 @@ void progSkillsNoPid() {
 
   move(30, 40);*/
 
-  move(55.5, 50);
+
+  movePid(45, 60);
 
   wait(500, msec);
 
@@ -532,7 +544,7 @@ void progSkillsNoPid() {
 
   // spin to align with goal, move forward, align, score
 
-  spinRobot(55, false, 30);
+  spinRobot(62, false, 30);
 
   wait(100, msec);
   intake();
@@ -543,7 +555,7 @@ void progSkillsNoPid() {
 
   wait(100, msec);
 
-  move(15, 60);
+  move(18, 60);
 
 
   wait(200, msec);
