@@ -76,6 +76,8 @@ void progSkillsWithPid();
 void autonRowBlue(bool red);
 void autonRowRed();
 void strafeRight(double length, double speed, bool waitComp = true);
+void autonBlue();
+void autonRed();
 
 
 #define waitUntil(condition)                                                   \

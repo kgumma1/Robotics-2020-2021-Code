@@ -63,7 +63,8 @@ bool checkred = true;
 // ball in front of starting position is not alliance color
 void autonDifferentColor() {
   release();
-  movePid(32, 30);
+  movePid(22, 30);
+  movePid(10, 40);
   spinRobot(70, true, 40);
   intake();
   BottomRoller.spin(vex::directionType::fwd, 50, vex::velocityUnits::pct);
@@ -96,13 +97,13 @@ void autonRowBlue(bool red) {
   startTimer.broadcast();
   release();
 
-  strafeRight(24.5, 50);
+  strafeRight(31, 50);
   intake();
-  spinRobot(47, false, 40);
+  spinRobot(54, false, 30);
 
   wait(100, msec);
 
-  movePid(37, 70);
+  movePid(38.5, 100);
 
   /*strafeRight(2, true, 40);
 
@@ -111,25 +112,33 @@ void autonRowBlue(bool red) {
   brakeMotor(LeftFront);
   brakeMotor(RightFront);
   brakeMotor(LeftRear);  
-  wait(200, msec);
+  wait(300, msec);
 
   RightRear.spinFor(500, msec, 100, vex::velocityUnits::pct);
   LeftFront.spinFor(250, msec, 100, vex::velocityUnits::pct);
 
-  brakeMotor(LeftIntake);
-  brakeMotor(RightIntake);
   
   alignFront.broadcast();
 
-  wait(200, msec);
+  wait(300, msec);
 
   BottomRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
   TopRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-  wait(200, msec);
   outtake(0);
+  wait(100, msec);
+  outtake(0);
+  wait(300, msec);
 
-  RightRear.spinFor(1500, msec, 100, vex::velocityUnits::pct);
-  LeftRear.spinFor(1500, msec, -100, vex::velocityUnits::pct);
+
+  brakeMotor(LeftFront);
+  brakeMotor(RightFront);
+  brakeMotor(LeftRear); 
+  brakeMotor(RightRear); 
+
+  LeftRear.spinFor(-550, vex::rotationUnits::deg, -40, vex::velocityUnits::pct);
+  alignRightSide.broadcast();
+  wait(700, msec);
+
   /*
   movePid(-6.5, 50);
   strafeRight(7, 50);
@@ -146,16 +155,16 @@ void autonRowBlue(bool red) {
   movePid(-2, 50);*/
   brakeMotor(BottomRoller);
   brakeMotor(TopRoller);
-
-  move(-7, 50);
+  movePid(-3, 35);
+  alignRightSide.broadcast();
+  wait(300, msec);
+  spinRobot(13, true, 30);
   wait(100, msec);
-  spinRobot(5, true, 30);
-
-  strafeRight(-110, 70);
+  strafeRight(-108, 70);
 
   wait(100, msec);
 
-  spinRobot(47, false, 40);
+  spinRobot(35, false, 30);
 
   wait(100, msec);
 
@@ -164,7 +173,7 @@ void autonRowBlue(bool red) {
   
   BottomRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
   TopRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-  movePid(24, 70);
+  movePid(25, 70);
 
 
 
@@ -172,19 +181,9 @@ void autonRowBlue(bool red) {
 
   alignFront.broadcast();
 
-  wait(700, msec);
-
-  while(bottomSensorNew.objectDistance(vex::distanceUnits::mm) > 40) {
-
-  }
+  wait(500, msec);
   outtake(0);
-
-  while(!topSensorNew.isNearObject()) {
-
-  }
-
-  wait(300, msec);
-
+  wait(500, msec);
   
 
 
@@ -197,11 +196,9 @@ void autonRowBlue(bool red) {
     }
   }*/
 
-  brakeMotor(TopRoller);
-  brakeMotor(BottomRoller);
   outtake(100);
 
-  movePid(-20, 50);
+  movePid(-25, 50);
 
   wait(5000, msec);
 
@@ -257,11 +254,11 @@ void autonRowRed() {
 
   spinRobot(10, true, 30);
 
-  strafeRight(-109, 70);
+  strafeRight(-113, 70);
 
   wait(100, msec);
 
-  spinRobot(40, false, 40);
+  spinRobot(37, false, 40);
 
   wait(100, msec);
 
@@ -312,4 +309,87 @@ void autonRowRed() {
   wait(5000, msec);
 
 
+}
+
+void autonRed() {
+  release();
+
+  strafeRight(33, 30);
+  intake();
+  spinRobot(40, false, 40);
+
+  wait(100, msec);
+
+  movePid(45, 50);
+  alignFront.broadcast();
+  wait(500, msec);
+  spinRobot(10, false, 30);
+
+  alignFront.broadcast();
+  wait(300, msec);
+  outtake(0);
+
+  BottomRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+  TopRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+
+  while(!topSensorNew.isNearObject()) {
+
+  }
+/*
+  wait(300, msec);
+  while(!topSensorNew.isNearObject()) {
+
+  }
+  wait(300, msec);
+  while(!topSensorNew.isNearObject()) {
+
+  }*/
+  wait(300, msec);
+  outtake(0);
+  TopRoller.stop(vex::brakeType::hold);
+  BottomRoller.stop(vex::brakeType::hold);
+
+
+  //movePid(-10, 50);
+}
+
+void autonBlue() {
+  release();
+
+  strafeRight(33, 30);
+  intake();
+  spinRobot(45, false, 40);
+
+  wait(100, msec);
+
+  movePid(45, 50);
+  alignFront.broadcast();
+  wait(500, msec);
+  spinRobot(15, false, 30);
+
+  alignFront.broadcast();
+  wait(300, msec);
+  outtake(0);
+
+  BottomRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+  TopRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+
+  while(!topSensorNew.isNearObject()) {
+
+  }
+  wait(300, msec);
+/*
+  wait(300, msec);
+  while(!topSensorNew.isNearObject()) {
+
+  }
+  wait(300, msec);
+  while(!topSensorNew.isNearObject()) {
+
+  }*/
+  TopRoller.stop(vex::brakeType::hold);
+  BottomRoller.stop(vex::brakeType::hold);
+
+
+  //movePid(-10, 50);
 }

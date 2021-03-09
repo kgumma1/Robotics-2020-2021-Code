@@ -4,7 +4,7 @@ using namespace vex;
 
 void release() {
   
-  TopRoller.spinFor(180, vex::rotationUnits::deg, 100, vex::velocityUnits::pct, false);
+  TopRoller.spinFor(180, vex::rotationUnits::deg, 7, vex::velocityUnits::pct, false);
   RightIntake.spinFor(-180, vex::rotationUnits::deg, 100, vex::velocityUnits::pct, false);
   LeftIntake.spinFor(-180, vex::rotationUnits::deg, 100, vex::velocityUnits::pct, true);
   
@@ -42,4 +42,14 @@ void auton() {
   if(autonSelect == 9) {
     autonRowRed();
   }    
+  if(autonSelect == 10) {
+    autonBlue();
+  }
+  if(autonSelect == 11) {
+    autonRed();
+  }
+  if(autonSelect == 12) {
+    wait(13000, msec);
+    release();
+  }
 }

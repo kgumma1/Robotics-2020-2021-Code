@@ -179,7 +179,7 @@ void trackTime() {
   Brain.Screen.setFont(monoXXL);
   while(1) {
     Brain.Screen.clearScreen();
-    Brain.Screen.printAt(100, 100, "%i", time);
+    Brain.Screen.printAt(100, 100, "Time: %i", time);
     wait(1000, msec);
     time+=1;
   }
@@ -225,7 +225,7 @@ void progSkillsNoPid() {
   brakeMotor(RightIntake);
   brakeMotor(LeftIntake);*/
 
-  strafeRight(13, 35);
+  strafeRight(12.5, 35);
   move(39, 50);
   spinRobot(63, false, 45);
   outtake(0);
@@ -320,7 +320,7 @@ void progSkillsNoPid() {
   runBottomRoller();
   TopRoller.stop(vex::brakeType::hold);
   
-  move(21, 45);
+  move(21, 25);
 
  /*
   RightFront.spinFor(400, msec, 50, vex::velocityUnits::pct);
@@ -333,10 +333,10 @@ void progSkillsNoPid() {
   // back out and spin to align with ball right in front of edge goal
   BottomRoller.spin(vex::directionType::fwd, 60, vex::velocityUnits::pct);
   wait(100, msec);
-  move(-8, 35); 
+  move(-6.5, 35); 
   wait(100, msec);
 
-  spinRobot(80, true, 30);
+  spinRobot(87, true, 30);
 
   // move loaded ball up to make space for next
   TopRoller.spin(vex::directionType::fwd, 40, vex::velocityUnits::pct);
@@ -351,7 +351,7 @@ void progSkillsNoPid() {
 
   
 
-  movePid(36, 70);
+  movePid(36.5, 70);
 
   movePid(-2, 30);
 
@@ -572,8 +572,7 @@ void progSkillsNoPid() {
   intake();
   wait(500, msec);
   brakeMotor(BottomRoller);
-  brakeMotor(LeftIntake);
-  brakeMotor(RightIntake);
+  outtake(0);
 
   wait(100, msec);
 
@@ -600,8 +599,8 @@ void progSkillsNoPid() {
 
   wait(300, msec);
 
-  TopRoller.stop(vex::brakeType::hold);
-  BottomRoller.stop(vex::brakeType::hold);
+  TopRoller.spin(vex::directionType::rev, 0, vex::velocityUnits::pct);
+  BottomRoller.spin(vex::directionType::fwd, 0, vex::velocityUnits::pct);
 
   wait(100, msec);
 
