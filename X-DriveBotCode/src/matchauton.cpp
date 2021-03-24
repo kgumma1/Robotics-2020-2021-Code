@@ -147,15 +147,15 @@ void autonRowBlue(bool red) {
   brakeMotor(BottomRoller);
   brakeMotor(TopRoller);
 
-  move(-7, 50);
+  move(-10, 50);
   wait(100, msec);
   spinRobot(5, true, 30);
 
-  strafeRight(-110, 70);
+  strafeRight(-108, 70);
 
   wait(100, msec);
 
-  spinRobot(47, false, 40);
+  spinRobot(45, false, 40);
 
   wait(100, msec);
 
@@ -213,13 +213,13 @@ void autonRowRed() {
   startTimer.broadcast();
   release();
 
-  strafeRight(19.5, 50);
+  strafeRight(27, 50);
   intake();
-  spinRobot(43, false, 40);
+  spinRobot(48, false, 60);
 
   wait(100, msec);
 
-  movePid(37, 70);
+  movePid(37, 60);
 
   brakeMotor(LeftFront);
   brakeMotor(RightFront);
@@ -235,7 +235,7 @@ void autonRowRed() {
 
   BottomRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
   TopRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-  wait(500, msec);
+  wait(700, msec);
   outtake(50);
   
   movePid(-6.5, 50);
@@ -257,11 +257,11 @@ void autonRowRed() {
 
   spinRobot(10, true, 30);
 
-  strafeRight(-109, 70);
+  strafeRight(-106, 70);
 
   wait(100, msec);
 
-  spinRobot(40, false, 40);
+  spinRobot(35, false, 40);
 
   wait(100, msec);
 
