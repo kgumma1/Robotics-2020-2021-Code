@@ -49,7 +49,6 @@ void auton() {
     autonRed();
   }
   if(autonSelect == 12) {
-    wait(13000, msec);
     release();
   }
 }

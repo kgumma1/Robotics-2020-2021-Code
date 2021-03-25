@@ -16,6 +16,9 @@ void rollers() {
   } else if (ct.ButtonY.pressing()) {
     TopRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
     TopRoller.setBrake(vex::brakeType::coast);
+  } else if (ct.ButtonLeft.pressing()) {
+    TopRoller.spin(vex::directionType::rev, 12, vex::voltageUnits::volt);
+    BottomRoller.spin(vex::directionType::rev, 12, vex::voltageUnits::volt);
   } else {
     BottomRoller.stop(vex::brakeType::coast);
     TopRoller.stop();
