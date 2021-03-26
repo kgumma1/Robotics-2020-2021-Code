@@ -97,9 +97,9 @@ void autonRowBlue(bool red) {
   startTimer.broadcast();
   release();
 
-  strafeRight(37, 50);
+  strafeRight(30, 50);
   intake();
-  spinRobot(38, false, 30);
+  spinRobot(54, false, 30);
 
   wait(100, msec);
 
@@ -119,7 +119,7 @@ void autonRowBlue(bool red) {
   
   alignFront.broadcast();
 
-  wait(200, msec);
+  wait(400, msec);
 
   BottomRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
   TopRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
@@ -160,21 +160,23 @@ void autonRowBlue(bool red) {
   wait(800, msec);
   spinRobot(10, true, 30);
   wait(100, msec);
-  strafeRight(-113, 90);
+  strafeRight(-110, 90);
 
   wait(100, msec);
 
-  spinRobot(29, false, 40);
+  spinRobot(30, false, 60);
 
   intake();
 
   
   BottomRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
   TopRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-  movePid(22, 90);
+  movePid(27, 90);
 
 
   alignFront.broadcast();
+
+  wait(500, msec);
 
   while(bottomSensorNew.objectDistance(vex::distanceUnits::mm) > 40){
 
