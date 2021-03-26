@@ -99,7 +99,7 @@ void autonRowBlue(bool red) {
 
   strafeRight(30, 50);
   intake();
-  spinRobot(54, false, 30);
+  spinRobot(53, false, 30);
 
   wait(100, msec);
 
@@ -158,7 +158,7 @@ void autonRowBlue(bool red) {
   movePid(-14, 35);
   alignRightSide.broadcast();
   wait(800, msec);
-  spinRobot(10, true, 30);
+  spinRobot(12, true, 30);
   wait(100, msec);
   strafeRight(-110, 90);
 
@@ -171,7 +171,7 @@ void autonRowBlue(bool red) {
   
   BottomRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
   TopRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-  movePid(27, 90);
+  movePid(27, 100);
 
 
   alignFront.broadcast();
