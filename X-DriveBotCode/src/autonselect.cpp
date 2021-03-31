@@ -11,7 +11,7 @@ void release() {
 }
 
 void auton() {
-  int autonSelect = 8;
+  int autonSelect = 10;
   if(autonSelect == 0) {
     testing();
   }
