@@ -454,19 +454,16 @@ void autonBlue() {
   brakeMotor(BottomRoller);
   outtake(100);
 
-  
+
   movePid(-32, 70);
-
-  spinRobot(10, false, 50);
-
-  movePid(-20.5, 70);
 
   BottomRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
   TopRoller.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
 
-  while(!topSensorNew.isNearObject()) {
+  spinRobot(10, true, 50);
 
-  }
+
+  movePid(-20.5, 70);
 
   wait(100, msec);
 
