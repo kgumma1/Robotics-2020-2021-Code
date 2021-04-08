@@ -105,8 +105,8 @@ double accelCap(double num, double currVelocity, bool active) {
   }
 }
 
-double encoderLeftInit = leftEncoder.position(vex::rotationUnits::deg);
-double encoderRightInit = rightEncoder.position(vex::rotationUnits::deg);
+//double encoderLeftInit = leftEncoder.position(vex::rotationUnits::deg);
+//double encoderRightInit = rightEncoder.position(vex::rotationUnits::deg);
 
 void drive() {
   
@@ -126,7 +126,6 @@ void drive() {
   double speedLR = getMotorSpeed(LeftRear);
   double speedRF = getMotorSpeed(RightFront);
   double speedRR = getMotorSpeed(RightRear);
-
 
   
   if ((abs(leftStickX) >= 10 || abs(leftStickY) >= 10) || abs(rightStickX) > 5) {
@@ -175,8 +174,8 @@ void drive() {
     if (leftStickX == 0 && rightStickX == 0) {
       goingStraight = true;
     } else {
-      encoderLeftInit = leftEncoder.position(vex::rotationUnits::deg);
-      encoderRightInit = rightEncoder.position(vex::rotationUnits::deg);
+      //encoderLeftInit = leftEncoder.position(vex::rotationUnits::deg);
+      //encoderRightInit = rightEncoder.position(vex::rotationUnits::deg);
     }
 
     printf("right = %f, left = %f\n", powerRightGroup, powerLeftGroup);
