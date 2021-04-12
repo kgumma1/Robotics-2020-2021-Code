@@ -7,15 +7,13 @@ void rollers() {
   // R2 = run intakes + rollers
   if(ct.ButtonL1.pressing()) {
     BottomRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
-    TopRoller.spin(vex::directionType::fwd, -12, vex::voltageUnits::volt);
-    TopRoller.setBrake(vex::brakeType::coast);
+    TopRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
   } else if (ct.ButtonL2.pressing()) {
     BottomRoller.spin(vex::directionType::fwd, -12, vex::voltageUnits::volt);
-    TopRoller.spin(vex::directionType::fwd, 12, vex::voltageUnits::volt);
-    TopRoller.setBrake(vex::brakeType::coast);
+    TopRoller.spin(vex::directionType::fwd, -12, vex::voltageUnits::volt);
   } else {
     BottomRoller.stop(vex::brakeType::coast);
-    TopRoller.stop();
+    TopRoller.stop(vex::brakeType::coast);
   }
 
 }

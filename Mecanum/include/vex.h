@@ -15,7 +15,13 @@
 #include "v5.h"
 #include "v5_vcs.h"
 
+
+
 #include "robot-config.h"
+
+extern const double PI;
+extern double wheelCirc;
+extern double turnCirc;
 
 extern brain Brain;
 extern competition Competition;
@@ -50,7 +56,7 @@ double getMotorSpeed(vex::motor motorName);
 void drive();
 
 //intakes file
-void intakeDrive();
+void intake();
 
 //rollers file
 void rollers();
