@@ -19,6 +19,10 @@
 
 #include "robot-config.h"
 
+extern const double PI;
+extern double wheelCirc;
+extern double turnCirc;
+
 extern brain Brain;
 extern competition Competition;
 
