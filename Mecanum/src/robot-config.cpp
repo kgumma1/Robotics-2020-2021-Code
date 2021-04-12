@@ -8,6 +8,9 @@ using code = vision::code;
 brain  Brain;
 
 // VEXcode device constructors
+encoder rightEncoder = encoder(Brain.ThreeWirePort.A);
+encoder backEncoder = encoder(Brain.ThreeWirePort.C);
+encoder leftEncoder = encoder(Brain.ThreeWirePort.G);
 
 // VEXcode generated functions
 

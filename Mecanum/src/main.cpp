@@ -1,18 +1,4 @@
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// backEncoder          encoder       E, F            
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// rightEncoder         encoder       C, D            
-// backEncoder          encoder       E, F            
-// ---- END VEXCODE CONFIGURED DEVICES ----
+
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
@@ -43,16 +29,15 @@ using namespace vex;
 // A global instance of competition
 competition Competition;
 
-
 // define your global instances of motors and other devices here
-/*
-vex::motor LeftFront(vex::PORT11, true);
-vex::motor LeftRear(vex::PORT4, true);
-vex::motor RightFront(vex::PORT8);
-vex::motor RightRear(vex::PORT10);
-*/
+
+vex::motor LeftFront(vex::PORT13, true);
+vex::motor LeftRear(vex::PORT11, true);
+vex::motor RightFront(vex::PORT18);
+vex::motor RightRear(vex::PORT21);
+
 vex::motor LeftIntake(vex::PORT1, true);
-vex::motor RightIntake(vex::PORT11);
+vex::motor RightIntake(vex::PORT20);
 
 vex::motor BottomRoller(vex::PORT8, true);
 vex::motor TopRoller(vex::PORT4, true);
@@ -74,7 +59,7 @@ vex::controller ct;
 long topSensorInit = 0;
 long bottomSensorInit = 0;
 
-/*
+
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
@@ -82,11 +67,8 @@ void pre_auton(void) {
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
   wait(7000, msec);
-  topSensorInit = topSensor.value(vex::analogUnits::range12bit);
-  bottomSensorInit = bottomSensor.value(vex::analogUnits::range12bit);
-  Brain.Screen.printAt(50, 50, "TOP = %ld, BOTTOM = %ld", topSensor.value(vex::analogUnits::range12bit), bottomSensor.value(vex::analogUnits::range12bit));
 }
-*/
+
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
 /*                              Autonomous Task                              */
@@ -134,9 +116,13 @@ void autonomous(void) {
 
 
 void usercontrol(void) {
+
+  rightEncoder.resetRotation();
+  leftEncoder.resetRotation();
+  backEncoder.resetRotation();
+  
   // User control code here, inside the loop
   //startInitTop.broadcast();
-
   while (1) {
     /*
     if(ct.ButtonLeft.pressing()) {
@@ -151,12 +137,12 @@ void usercontrol(void) {
     // update your motors, etc.
     // ........................................................................
 
-    printf("lol");
+    printf("encoder = %f\n", rightEncoder.position(degrees));
     //motorInfo();
 
-    //drive();
+    drive();
 
-    intakeDrive();
+    intake();
 
     rollers();
 
@@ -177,12 +163,13 @@ void usercontrol(void) {
 // Main will set up the competition functions and callbacks.
 //
 int main() {
+
   // Set up callbacks for autonomous and driver control periods.
-  //Competition.autonomous(autonomous);
+  Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
 
   // Run the pre-autonomous function.
-  //pre_auton();
+  pre_auton();
 
   // Prevent main from exiting with an infinite loop.
   while (true) {

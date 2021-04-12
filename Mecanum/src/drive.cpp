@@ -2,7 +2,7 @@
 
 using namespace vex;
 
-int printTimer=0;
+int printTimer = 0;
 
 const double PI = 3.14159265;
 const double PROPORTION_FACTOR = 200.0 / 90.0;
@@ -10,9 +10,6 @@ const double PROPORTION_FACTOR = 200.0 / 90.0;
 void spinMotor(vex::motor motorName, double speedPerc) {
   motorName.spin(vex::directionType::fwd, speedPerc, vex::velocityUnits::pct);
 }
-
-
-
 
 int isPos(double num) {
   if(num >= 0) {
@@ -35,7 +32,7 @@ double expFunction(double num) {
   if (num < 0) {
     num*=-1;
   }
-  num = 0.1108 * pow(1.061, (num + 15)) - 0.2698;
+  num = 0.098 * pow(1.072, num);
   return num;
 }
 
@@ -105,11 +102,16 @@ double accelCap(double num, double currVelocity, bool active) {
   }
 }
 
-//double encoderLeftInit = leftEncoder.position(vex::rotationUnits::deg);
-//double encoderRightInit = rightEncoder.position(vex::rotationUnits::deg);
+
+
+//double encoderRightInit = rightEncoder.position(degrees);
+//double encoderLeftInit = leftEncoder.position(degrees);
+
 
 void drive() {
-  
+  leftEncoder.resetRotation();
+  rightEncoder.resetRotation();
+  backEncoder.resetRotation();
   //update stick positions
   int leftStickX = ct.Axis4.position();
   int leftStickY = ct.Axis3.position();
@@ -174,8 +176,8 @@ void drive() {
     if (leftStickX == 0 && rightStickX == 0) {
       goingStraight = true;
     } else {
-      //encoderLeftInit = leftEncoder.position(vex::rotationUnits::deg);
-      //encoderRightInit = rightEncoder.position(vex::rotationUnits::deg);
+      //encoderLeftInit = leftEncoder.position(degrees);
+      //encoderRightInit = rightEncoder.position(degrees);
     }
 
     printf("right = %f, left = %f\n", powerRightGroup, powerLeftGroup);
@@ -188,10 +190,8 @@ void drive() {
 
     /*
     double motorvalues[] = {speedLF, speedRR, speedLR, speedRF};
-
     double min = 100;
     double max = -100;
-
     for (int i = 0; i < 4; i++) {
       if (motorvalues[i] > max) {
           max = motorvalues[i];
@@ -200,7 +200,6 @@ void drive() {
           min = motorvalues[i];
       }
     }
-
     int threshold = 5;
     if (goingStraight && min > 0) {
       if (speedLF > min + threshold) {
@@ -237,16 +236,11 @@ void drive() {
 /*
     if (goingStraight) {
       double correctionVal = (leftEncoder.position(vex::rotationUnits::deg) - rightEncoder.position(vex::rotationUnits::deg)) - (encoderLeftInit - encoderRightInit);
-
       double scaleFactor = 0.01;
-
       changedSpeeds[0] = inputLF + correctionVal * scaleFactor;
       changedSpeeds[1] = inputRF - correctionVal * scaleFactor;
       changedSpeeds[2] = inputRR - correctionVal * scaleFactor;
       changedSpeeds[3] = inputLR + correctionVal * scaleFactor;
-
-
-
     }*/
 
     double smoothFactor = 1.5;
