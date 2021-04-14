@@ -11,7 +11,7 @@ void spinMotor(vex::motor motorName, double speedPerc) {
   motorName.spin(vex::directionType::fwd, speedPerc, vex::velocityUnits::pct);
 }
 
-int isPos(double num) {
+double isPos(double num) {
   if(num >= 0) {
     return 1;
   } else {
@@ -109,9 +109,6 @@ double accelCap(double num, double currVelocity, bool active) {
 
 
 void drive() {
-  leftEncoder.resetRotation();
-  rightEncoder.resetRotation();
-  backEncoder.resetRotation();
   //update stick positions
   int leftStickX = ct.Axis4.position();
   int leftStickY = ct.Axis3.position();

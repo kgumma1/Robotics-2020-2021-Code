@@ -6,6 +6,7 @@ extern brain Brain;
 extern encoder rightEncoder;
 extern encoder backEncoder;
 extern encoder leftEncoder;
+extern optical bottomSensor;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

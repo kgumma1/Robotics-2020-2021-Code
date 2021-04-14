@@ -1,3 +1,19 @@
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// rightEncoder         encoder       A, B            
+// backEncoder          encoder       C, D            
+// leftEncoder          encoder       G, H            
+// bottomSensor         optical       11              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// rightEncoder         encoder       A, B            
+// backEncoder          encoder       C, D            
+// leftEncoder          encoder       G, H            
+// Optical11            optical       11              
+// ---- END VEXCODE CONFIGURED DEVICES ----
 
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
@@ -31,16 +47,16 @@ competition Competition;
 
 // define your global instances of motors and other devices here
 
-vex::motor LeftFront(vex::PORT13, true);
-vex::motor LeftRear(vex::PORT11, true);
-vex::motor RightFront(vex::PORT18);
+vex::motor LeftFront(vex::PORT14, true);
+vex::motor LeftRear(vex::PORT12, true);
+vex::motor RightFront(vex::PORT17);
 vex::motor RightRear(vex::PORT21);
 
 vex::motor LeftIntake(vex::PORT1, true);
-vex::motor RightIntake(vex::PORT20);
+vex::motor RightIntake(vex::PORT19);
 
-vex::motor BottomRoller(vex::PORT8, true);
-vex::motor TopRoller(vex::PORT4, true);
+vex::motor BottomRoller(vex::PORT3, true);
+vex::motor TopRoller(vex::PORT5);
 
 
 vex::controller ct;
@@ -83,7 +99,7 @@ void autonomous(void) {
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
-  //auton();
+  auton();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -137,12 +153,12 @@ void usercontrol(void) {
     // update your motors, etc.
     // ........................................................................
 
-    printf("encoder = %f\n", rightEncoder.position(degrees));
+    printf("encoderR = %f, encoderL = %f\n", rightEncoder.position(degrees), leftEncoder.position(degrees));
     //motorInfo();
 
     drive();
 
-    intake();
+    intakes();
 
     rollers();
 

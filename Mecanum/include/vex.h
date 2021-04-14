@@ -54,14 +54,21 @@ void motorInfo();
 void spinMotor(vex::motor motorName, double speedPerc);
 double getMotorSpeed(vex::motor motorName);
 void drive();
+double isPos(double num);
 
 //intakes file
-void intake();
+void intakes();
 
 //rollers file
 void rollers();
 
 //auton
+void auton();
+void homerow();
+void coordinated();
+void movePid (double distance, double maxSpeed);
+void turnRightPid (double angle, double maxSpeed);
+void strafeRightPid (double distance, double maxSpeed);
 
 
 #define waitUntil(condition)                                                   \
