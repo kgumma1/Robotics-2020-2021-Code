@@ -3,6 +3,6 @@
 using namespace vex;
 
 void coordinated() {
-  strafeRightPid(10, 100);
+  strafeRightPid(20, 100);
 
 }

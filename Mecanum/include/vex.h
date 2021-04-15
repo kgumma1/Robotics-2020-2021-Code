@@ -71,6 +71,9 @@ void turnRightPid (double angle, double maxSpeed);
 void strafeRightPid (double distance, double maxSpeed);
 
 
+void motorInfo();
+
+
 #define waitUntil(condition)                                                   \
   do {                                                                         \
     wait(5, msec);                                                             \

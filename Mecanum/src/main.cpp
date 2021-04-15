@@ -153,8 +153,8 @@ void usercontrol(void) {
     // update your motors, etc.
     // ........................................................................
 
-    printf("encoderR = %f, encoderL = %f\n", rightEncoder.position(degrees), leftEncoder.position(degrees));
-    //motorInfo();
+    //printf("encoderR = %f, encoderL = %f\n", rightEncoder.position(degrees), leftEncoder.position(degrees));
+    motorInfo();
 
     drive();
 

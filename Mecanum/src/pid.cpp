@@ -224,14 +224,14 @@ void turnRightPid (double angle, double maxSpeed) {
 void strafeRightPid (double distance, double maxSpeed) {
   // ku = 0.165
   // pu = 811 ms
-  double KP = 0.15;
+  double KP = 0.2;
   double KI = 0;
-  double KD = 0.025;
+  double KD = 1.1;
 
   // 0 position = left encoder, 1 position = right encoder
   double error;
   double power;
-  double integral;
+  double integral = 0;
   double derivative;
   double prevError;
 
@@ -242,8 +242,8 @@ void strafeRightPid (double distance, double maxSpeed) {
   backEncoder.resetRotation();
 
   error = distance - backEncoder.position(vex::rotationUnits::deg);
-//fabs(error) > 20
-  while (1) {
+
+  while (fabs(error) > 20) {
       ///*
       error = distance - backEncoder.position(vex::rotationUnits::deg);
       //*/
