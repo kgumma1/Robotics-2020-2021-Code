@@ -22,6 +22,8 @@
 extern const double PI;
 extern double wheelCirc;
 extern double turnCirc;
+extern int alignTime;
+extern int alignSpeed;
 
 extern brain Brain;
 extern competition Competition;
@@ -40,12 +42,16 @@ extern vex::motor TopRoller;
 
 extern vex::controller ct;
 
+extern vex::event alignTrigger;
+
 extern const double PI;
 extern double turnCirc;
 extern double wheelCirc;
 
 extern long bottomSensorInit;
 extern long topSensorInit;
+
+extern bool checkred;
 
 void testing();
 void motorInfo();
@@ -64,11 +70,20 @@ void rollers();
 
 //auton
 void auton();
-void homerow();
+void homerow(bool blueAlliance);
+void coordinated(bool blueAlliance);
 void coordinated();
 void movePid (double distance, double maxSpeed);
 void turnRightPid (double angle, double maxSpeed);
 void strafeRightPid (double distance, double maxSpeed);
+void intake(int speed = 100);
+void index(int speed = 100);
+void brakeMotor(vex::motor);
+void align();
+void alignRobot(int time, int speed = 50, bool waitComp = false);
+bool redball();
+bool blueball();
+bool checkColor();
 
 
 void motorInfo();

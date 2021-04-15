@@ -177,7 +177,7 @@ void drive() {
       //encoderRightInit = rightEncoder.position(degrees);
     }
 
-    printf("right = %f, left = %f\n", powerRightGroup, powerLeftGroup);
+    //printf("right = %f, left = %f\n", powerRightGroup, powerLeftGroup);
 
     double inputLF = round100(powerRightGroup + rightStickX);
     double inputRR = round100(powerRightGroup - rightStickX);

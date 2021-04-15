@@ -6,9 +6,9 @@ using namespace vex;
 void movePid (double distance, double maxSpeed) {
   // ku = 0.165
   // pu = 811 ms
-  double KP = 0.09;
+  double KP = 0.13;
   double KI = 0;
-  double KD = 0.025;
+  double KD = 0.9;
 
   // 0 position = left encoder, 1 position = right encoder
   double errors[2];
@@ -17,7 +17,7 @@ void movePid (double distance, double maxSpeed) {
   double derivatives[2];
   double prevErrors[2];
 
-  distance = (distance / (3.25 * 3.14159265)) * 180;
+  distance = (distance / (3.25 * 3.14159265)) * 360;
 
   prevErrors[0] = distance;
   prevErrors[1] = distance;
@@ -28,7 +28,7 @@ void movePid (double distance, double maxSpeed) {
   errors[0] = distance - leftEncoder.position(vex::rotationUnits::deg);
   errors[1] = distance - rightEncoder.position(vex::rotationUnits::deg);
 
-  while (fabs(errors[0] + errors[1]) > 20) {
+  while (fabs(errors[0]) > 20 && fabs(errors[1]) > 20) {
       ///*
       errors[0] = distance - leftEncoder.position(vex::rotationUnits::deg);
       errors[1] = distance - rightEncoder.position(vex::rotationUnits::deg);

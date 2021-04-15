@@ -52,7 +52,7 @@ void autonSameColor() {
 }
 
 bool redball(){
-  return ((70 > topSensorNew.hue()) && topSensorNew.isNearObject());
+  return ((100 > topSensorNew.hue()) && topSensorNew.isNearObject());
 }
 
 bool blueball(){
