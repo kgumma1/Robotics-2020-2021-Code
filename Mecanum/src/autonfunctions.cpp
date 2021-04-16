@@ -50,7 +50,7 @@ bool redball(){
 }
 
 bool blueball(){
-  return 220 >= bottomSensor.hue() && bottomSensor.hue() >= 150;
+  return 220 >= bottomSensor.hue() && bottomSensor.hue() >= 140;
 }
 
 bool checkred = true;
