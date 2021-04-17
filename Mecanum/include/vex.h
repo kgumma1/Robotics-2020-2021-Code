@@ -84,7 +84,8 @@ void alignRobot(int time, int speed = 50, bool waitComp = false);
 bool redball();
 bool blueball();
 bool checkColor();
-
+bool checkOpp();
+void strafeReg(int time, int speed);
 
 void motorInfo();
 

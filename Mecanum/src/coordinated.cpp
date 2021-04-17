@@ -5,6 +5,7 @@ using namespace vex;
 
 void coordinated(bool blueAlliance) {
   checkred = blueAlliance;
+  
   intake();
   wait(600, msec);
 
@@ -40,6 +41,8 @@ void coordinated(bool blueAlliance) {
 
   wait(700, msec);
 
+  brakeMotor(TopRoller);
+  brakeMotor(BottomRoller);
 
   turnRightPid(245, 100);
 
@@ -47,12 +50,13 @@ void coordinated(bool blueAlliance) {
 
   movePid(42, 100);
 
-  strafeRightPid(10, 100);
-
   index();
   
+  strafeRightPid(-8, 100);
 
-  alignRobot(400, 20, true);
+  turnRightPid(35, 100);
+
+  movePid(6, 20);
 
   LeftFront.stop(vex::brakeType::hold);
   RightFront.stop(vex::brakeType::hold);

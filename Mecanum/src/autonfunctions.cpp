@@ -16,6 +16,17 @@ void brakeMotor(vex::motor motorName){
   motorName.stop(vex::brakeType::coast);
 }
 
+void strafeReg(int time, int speed){
+  RightFront.spin(vex::directionType::fwd, -speed, velocityUnits::pct);
+  RightRear.spin(vex::directionType::fwd, speed, velocityUnits::pct);
+  LeftRear.spin(vex::directionType::fwd, -speed, velocityUnits::pct);
+  LeftFront.spin(vex::directionType::fwd, speed, velocityUnits::pct);
+  wait(time, msec);
+  brakeMotor(LeftFront);
+  brakeMotor(RightFront);
+  brakeMotor(LeftRear);
+  brakeMotor(RightRear);
+}
 
 int alignTime = 0;
 int alignSpeed = 0;
@@ -46,7 +57,7 @@ void alignRobot(int time, int speed, bool waitComp) {
 }
 
 bool redball(){
-  return 100 > bottomSensor.hue() || 345 < bottomSensor.hue();
+  return 100 > bottomSensor.hue();
 }
 
 bool blueball(){
@@ -55,10 +66,20 @@ bool blueball(){
 
 bool checkred = true;
 
+bool checkOpp() {
+   if (checkred){
+     return blueball(); 
+   } else {
+     return redball();
+   }
+  }
+
 bool checkColor() {
   if(checkred) {
     return redball();
   } else {
     return blueball();
   }
+
+  
 }
