@@ -152,9 +152,9 @@ void usercontrol(void) {
     // ........................................................................
 
     //printf("encoderR = %f, encoderL = %f\n", rightEncoder.position(degrees), leftEncoder.position(degrees));
-    //Brain.Screen.clearScreen();
-    //Brain.Screen.printAt(130, 90, "Color Sensor = %.0f", bottomSensor.hue());
-    motorInfo();
+    Brain.Screen.clearScreen();
+    Brain.Screen.printAt(130, 90, "Color Sensor = %.0f", bottomSensor.hue());
+    //motorInfo();
 
     drive();
 

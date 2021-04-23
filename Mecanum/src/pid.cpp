@@ -224,9 +224,9 @@ void turnRightPid (double angle, double maxSpeed) {
 void strafeRightPid (double distance, double maxSpeed) {
   // ku = 0.165
   // pu = 811 ms
-  double KP = 0.2;
+  double KP = 1;
   double KI = 0;
-  double KD = 1.1;
+  double KD = 0;
 
   // 0 position = left encoder, 1 position = right encoder
   double error;

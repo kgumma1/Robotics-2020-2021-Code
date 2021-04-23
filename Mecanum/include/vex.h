@@ -53,6 +53,11 @@ extern long topSensorInit;
 
 extern bool checkred;
 
+
+extern int redLowBound;
+extern int blueLowBound;
+extern int blueHighBound;
+
 void testing();
 void motorInfo();
 
@@ -72,7 +77,7 @@ void rollers();
 void auton();
 void homerow(bool blueAlliance);
 void coordinated(bool blueAlliance);
-void coordinated();
+void twoGoal(bool blueAlliance);
 void movePid (double distance, double maxSpeed);
 void turnRightPid (double angle, double maxSpeed);
 void strafeRightPid (double distance, double maxSpeed);
@@ -86,6 +91,7 @@ bool blueball();
 bool checkColor();
 bool checkOpp();
 void strafeReg(int time, int speed);
+void initSensors();
 
 void motorInfo();
 

@@ -2,14 +2,13 @@
 
 using namespace vex;
 
-
-void homerow(bool blueAlliance) {
+void twoGoal(bool blueAlliance) {
   checkred = blueAlliance;
   intake();
   wait(600, msec);
 
-
   initSensors();
+  
 
 
   movePid(3.75, 100);
@@ -48,7 +47,7 @@ void homerow(bool blueAlliance) {
 
   movePid(14, 100);
   //Brain.Screen.printAt(10, 10, "nalkfdjnlkasjlkfdj");
-  alignRobot(500, 60);
+  alignRobot(1000, 60);
 
   
 //  while (!( (70 > bottomSensor.hue() || 345 < bottomSensor.hue()) && bottomSensor.isNearObject() ) ) {
@@ -63,47 +62,5 @@ void homerow(bool blueAlliance) {
 
   movePid(-17, 100);
 
-  strafeRightPid(-33, 100);
-
-  brakeMotor(TopRoller);
-  brakeMotor(BottomRoller);
-  brakeMotor(LeftIntake);
-  brakeMotor(RightIntake);
-
-  turnRightPid(-47, 100);
-
-  intake();
-  index();
-
-  movePid(24, 100);
-
-  alignRobot(300);
-
-  while (!checkColor()) {
-    wait(1, msec);
-  }
-
-
-
-  brakeMotor(LeftIntake);
-  brakeMotor(RightIntake);
-
-  wait(70, msec);
-  index(-100);
-  intake(-100);
-
-  movePid(-20, 100);
-
-  LeftFront.stop(vex::brakeType::hold);
-  LeftRear.stop(vex::brakeType::hold);
-  RightFront.stop(vex::brakeType::hold);
-  RightRear.stop(vex::brakeType::hold);
-
-
-
-
-  wait(5000, msec);
-
-
-
+  
 }

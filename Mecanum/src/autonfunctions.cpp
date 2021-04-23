@@ -56,12 +56,25 @@ void alignRobot(int time, int speed, bool waitComp) {
   }
 }
 
+int redLowBound;
+int blueLowBound;
+int blueHighBound;
+
+
+
+
+void initSensors() {
+  blueLowBound = bottomSensor.hue() * 1.9;
+  blueHighBound = 70 + blueLowBound;
+  redLowBound = bottomSensor.hue()*0.85;
+}
+
 bool redball(){
-  return 100 > bottomSensor.hue();
+  return redLowBound > bottomSensor.hue() ||  300 < bottomSensor.hue();
 }
 
 bool blueball(){
-  return 220 >= bottomSensor.hue() && bottomSensor.hue() >= 140;
+  return blueLowBound <= bottomSensor.hue() && blueHighBound >= bottomSensor.hue() ;
 }
 
 bool checkred = true;
