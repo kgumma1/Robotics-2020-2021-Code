@@ -285,10 +285,10 @@ void strafeRightPid (double distance, double maxSpeed) {
         power = maxSpeed * isPos(power);
       }
       double offset = 0;
-      /*double offsetKp = 0.5;
-      double offset = (rightEncoder.position(vex::rotationUnits::deg) - leftEncoder.position(vex::rotationUnits::deg)) * offsetKp;
+      double offsetKp = 0.5;
+      offset = (rightEncoder.position(vex::rotationUnits::deg) - leftEncoder.position(vex::rotationUnits::deg)) * offsetKp;
       Brain.Screen.clearScreen();
-      Brain.Screen.printAt(130, 90, "Offset = %.0f", offset);*/
+      Brain.Screen.printAt(130, 90, "Offset = %.0f", offset);
 
 
       LeftFront.spin(vex::directionType::fwd, power + offset, vex::velocityUnits::pct);
