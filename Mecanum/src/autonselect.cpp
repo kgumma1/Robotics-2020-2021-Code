@@ -3,7 +3,7 @@
 using namespace vex;
 
 void auton() {
-  int autonselect = 3;
+  int autonselect = 8;
   
   if (autonselect == 0) {
     homerow(true);
@@ -36,5 +36,9 @@ void auton() {
   
   if (autonselect == 7) {
     twoGoal(false);
+  }
+
+  if (autonselect == 8) {
+    testing();
   }
 }

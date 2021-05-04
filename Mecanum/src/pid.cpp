@@ -224,7 +224,7 @@ void turnRightPid (double angle, double maxSpeed) {
 void strafeRightPid (double distance, double maxSpeed) {
   // ku = 0.165
   // pu = 811 ms
-  double KP = 1;
+  double KP = 0.5;
   double KI = 0;
   double KD = 0;
 
@@ -240,6 +240,8 @@ void strafeRightPid (double distance, double maxSpeed) {
   prevError = distance;
 
   backEncoder.resetRotation();
+  rightEncoder.resetRotation();
+  leftEncoder.resetRotation();
 
   error = distance - backEncoder.position(vex::rotationUnits::deg);
 
@@ -282,13 +284,18 @@ void strafeRightPid (double distance, double maxSpeed) {
       if(fabs(power) > fabs(maxSpeed)) {
         power = maxSpeed * isPos(power);
       }
+      double offset = 0;
+      /*double offsetKp = 0.5;
+      double offset = (rightEncoder.position(vex::rotationUnits::deg) - leftEncoder.position(vex::rotationUnits::deg)) * offsetKp;
+      Brain.Screen.clearScreen();
+      Brain.Screen.printAt(130, 90, "Offset = %.0f", offset);*/
 
 
-      LeftFront.spin(vex::directionType::fwd, power, vex::velocityUnits::pct);
-      LeftRear.spin(vex::directionType::fwd, -power, vex::velocityUnits::pct);
+      LeftFront.spin(vex::directionType::fwd, power + offset, vex::velocityUnits::pct);
+      LeftRear.spin(vex::directionType::fwd, -power + offset, vex::velocityUnits::pct);
 
-      RightFront.spin(vex::directionType::fwd, -power, vex::velocityUnits::pct);
-      RightRear.spin(vex::directionType::fwd, power, vex::velocityUnits::pct);
+      RightFront.spin(vex::directionType::fwd, -power - offset, vex::velocityUnits::pct);
+      RightRear.spin(vex::directionType::fwd, power - offset, vex::velocityUnits::pct);
 
       
     
