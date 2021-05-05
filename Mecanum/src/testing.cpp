@@ -5,6 +5,5 @@ using namespace vex;
 
 
 void testing() {
-  strafeRightPid(20, 100);
-
+  splinePid(40, 35, 100);
 }

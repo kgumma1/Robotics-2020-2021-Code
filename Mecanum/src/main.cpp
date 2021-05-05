@@ -154,13 +154,14 @@ void usercontrol(void) {
     //printf("encoderR = %f, encoderL = %f\n", rightEncoder.position(degrees), leftEncoder.position(degrees));
     //Brain.Screen.clearScreen();
     //Brain.Screen.printAt(130, 90, "Color Sensor = %.0f", bottomSensor.hue());
-    //motorInfo();
-    //Brain.Screen.clearScreen();
+    
+    Brain.Screen.clearScreen();
+    motorInfo();
     //Brain.Screen.printAt(130, 90, "Color Sensor = %.0f", bottomSensor.hue());
-    double offsetKp = 0.3;
+    /*double offsetKp = 0.3;
     double offset = (rightEncoder.position(vex::rotationUnits::deg) - leftEncoder.position(vex::rotationUnits::deg)) * offsetKp;
     Brain.Screen.clearScreen();
-    Brain.Screen.printAt(130, 90, "Offset = %.0f, back = %.0f", offset, backEncoder.position(vex::rotationUnits::deg));
+    Brain.Screen.printAt(130, 90, "Offset = %.0f, back = %.0f", offset, backEncoder.position(vex::rotationUnits::deg));*/
 
 
 
