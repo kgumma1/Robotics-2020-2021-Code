@@ -20,22 +20,27 @@ void homerow(bool blueAlliance) {
   
   countTopBalls(3);
 
-  splinePid(13, 6, 100, 11);
+  splinePid(13, 6, 100, 11.25);
 
-  alignRobot(300);
+  alignRobot(600);
 
 
-  index(90);
+  index(65);
   intake(100);
+
+  wait(100, msec);
+
+  intake(80);
   bottomBallCounter(3);
   intake(-100);
-  
+
   while (topBallCount < 3) {
     wait(1, msec);
+
   }
 
 
-  index(-20);
+  index(-40);
   intake(0);
   wait(400, msec);
 
@@ -47,7 +52,7 @@ void homerow(bool blueAlliance) {
   
 
 
-  splinePid(-62, -57, 100, 51.5);
+  splinePid(-63, -58, 100, 36);
 
 
   brakeMotor(TopRoller);
@@ -55,15 +60,17 @@ void homerow(bool blueAlliance) {
   brakeMotor(LeftIntake);
   brakeMotor(RightIntake);
   
-  turnRightPid(87, 100);
+  turnRightPid(100, 100);
 
 
-  alignRobot(500, 50, true);
+  alignRobot(300, 50, true);
+
+  alignRobot(200);
 
   countTopBalls(3);
 
   
-  index();
+  index(50);
 
   intake();
 
@@ -88,23 +95,23 @@ void homerow(bool blueAlliance) {
 
   intakeOne();
 
+  index(20);
+
+
+
+
+  splinePid(53, 58, 100, 41);
+
+
+  alignRobot(300, 100, true);
+
   index(100);
-
-
-
-
-  splinePid(53, 58, 100, 39);
-
-
-  alignRobot(500, 100, true);
-
-
   while (topBallCount < 1) {
     wait(1, msec);
   }
 
+  wait(200, msec);
 
-  wait(300, msec);
   brakeMotor(LeftIntake);
   brakeMotor(RightIntake);
   brakeMotor(TopRoller);

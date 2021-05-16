@@ -152,7 +152,7 @@ int topBallCounter() {
     Brain.Screen.printAt(30, 50, "top = %d", topBallCount);
   }
 
-  wait(150, msec);
+  wait(50, msec);
 
   index(-20);
   
@@ -187,6 +187,7 @@ int intakeOneStop() {
   Brain.Screen.printAt(130, 90, "t = %d", topBallCount);
 
   intake(-100);
+  index(0);
   return 0;
 }
 

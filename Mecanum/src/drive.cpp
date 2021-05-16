@@ -251,11 +251,25 @@ void drive() {
       
     }
 
-    spinMotor(LeftFront, changedSpeeds[0]);
-    spinMotor(RightFront, changedSpeeds[1]);
-    spinMotor(RightRear, changedSpeeds[2]);
-    spinMotor(LeftRear, changedSpeeds[3]);
+    if (ct.ButtonLeft.pressing()) {
+      if (rightStickX > 0) {
+        spinMotor(LeftFront, changedSpeeds[2] * .5);
+        spinMotor(RightFront, changedSpeeds[3] * .1);
+      } else {
+        spinMotor(LeftFront, changedSpeeds[2] * .1);
+        spinMotor(RightFront, changedSpeeds[3] * .5);
+        
+      }
+      spinMotor(RightRear, changedSpeeds[2]);
+      spinMotor(LeftRear, changedSpeeds[3]);
+    } else {
+      spinMotor(LeftFront, changedSpeeds[0]);
+      spinMotor(RightFront, changedSpeeds[1]);
+      spinMotor(RightRear, changedSpeeds[2]);
+      spinMotor(LeftRear, changedSpeeds[3]);
 
+
+    }
     
 
 

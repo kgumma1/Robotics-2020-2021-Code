@@ -182,7 +182,7 @@ void usercontrol(void) {
   //startInitTop.broadcast();
 
   
-     countTopBalls(1000);
+     //countTopBalls(1000);
   while (1) {
     /*
     if(ct.ButtonLeft.pressing()) {
