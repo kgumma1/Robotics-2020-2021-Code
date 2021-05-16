@@ -58,6 +58,10 @@ extern int redLowBound;
 extern int blueLowBound;
 extern int blueHighBound;
 
+extern int topBallCount;
+
+extern vex::task topBallTask;
+
 void testing();
 void motorInfo();
 
@@ -82,7 +86,7 @@ void twoGoal(bool blueAlliance);
 void movePid (double distance, double maxSpeed);
 void turnRightPid (double angle, double maxSpeed);
 void strafeRightPid (double distance, double maxSpeed);
-void splinePid(double distanceLeft, double distanceRight, double maxSpeed);
+void splinePid(double distanceLeft, double distanceRight, double maxSpeed, double stiffness);
 void intake(int speed = 100);
 void index(int speed = 100);
 void brakeMotor(vex::motor);
@@ -94,6 +98,11 @@ bool checkColor();
 bool checkOpp();
 void strafeReg(int time, int speed);
 void initSensors();
+void bottomBallCounter(int numBalls);
+bool nearTopSensor();
+int topBallCounter();
+void countTopBalls(int num);
+void intakeOne();
 
 void motorInfo();
 

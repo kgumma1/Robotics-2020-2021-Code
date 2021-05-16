@@ -7,6 +7,7 @@ extern encoder rightEncoder;
 extern encoder backEncoder;
 extern encoder leftEncoder;
 extern optical bottomSensor;
+extern optical topSensor;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

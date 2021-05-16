@@ -96,3 +96,106 @@ bool checkColor() {
 
   
 }
+
+
+void bottomBallCounter(int numBallsBottom) {
+  int counter = 0;
+  bool prevBall = false;
+  while (counter < numBallsBottom) {
+    if (bottomSensor.isNearObject() && prevBall == false) {
+      counter++;
+      prevBall = true;
+
+    } else if (!bottomSensor.isNearObject()){
+      prevBall = false;
+    }
+
+    wait(10, msec);
+    //Brain.Screen.clearScreen();
+    //Brain.Screen.printAt(130, 90, "b = %d, t = %d", counter, topBallCount);
+
+  }
+
+
+
+
+}
+
+bool nearTopSensor() {
+  //return topSensor.objectDistance(vex::distanceUnits::mm) < 80;
+
+  return topSensor.isNearObject();
+}
+
+
+
+int numBalls;
+int topBallCount;
+
+int topBallCounter() {
+  topBallCount = 0;
+  bool prevBall = false;
+  while (topBallCount < numBalls) {
+    if (nearTopSensor() && prevBall == false) {
+      topBallCount++;
+      prevBall = true;
+
+    } else if (!nearTopSensor()){
+      prevBall = false;
+    }
+
+    wait(1, msec);
+
+
+    Brain.Screen.setFont(vex::fontType::mono60);
+
+    Brain.Screen.printAt(30, 50, "top = %d", topBallCount);
+  }
+
+  wait(150, msec);
+
+  index(-20);
+  
+  return 0;
+
+
+}
+
+vex::task topBallTask;
+
+void countTopBalls(int num) {
+
+
+
+  topBallTask.stop();
+  numBalls = num;
+  topBallCount = 0;
+  topBallTask = vex::task( topBallCounter );
+
+  
+}
+
+
+int intakeOneStop() {
+  while (!bottomSensor.isNearObject()) {
+    wait(1, msec);
+    intake(60);
+    Brain.Screen.clearScreen();
+    Brain.Screen.printAt(130, 90, "b = aidflj, t = %d", topBallCount);
+  }
+  
+  Brain.Screen.printAt(130, 90, "t = %d", topBallCount);
+
+  intake(-100);
+  return 0;
+}
+
+vex::task intakeOffTask;
+
+void intakeOne() {
+
+  intakeOffTask = vex::task( intakeOneStop );
+  
+
+}
+

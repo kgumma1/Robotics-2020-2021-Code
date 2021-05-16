@@ -12,6 +12,7 @@ encoder rightEncoder = encoder(Brain.ThreeWirePort.A);
 encoder backEncoder = encoder(Brain.ThreeWirePort.C);
 encoder leftEncoder = encoder(Brain.ThreeWirePort.G);
 optical bottomSensor = optical(PORT11);
+optical topSensor = optical(PORT15);
 
 // VEXcode generated functions
 

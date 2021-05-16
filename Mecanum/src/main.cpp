@@ -5,6 +5,50 @@
 // backEncoder          encoder       C, D            
 // leftEncoder          encoder       G, H            
 // bottomSensor         optical       11              
+// topSensor            optical       15              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// rightEncoder         encoder       A, B            
+// backEncoder          encoder       C, D            
+// leftEncoder          encoder       G, H            
+// bottomSensor         optical       11              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// rightEncoder         encoder       A, B            
+// backEncoder          encoder       C, D            
+// leftEncoder          encoder       G, H            
+// bottomSensor         optical       11              
+// topSensor            distance      15              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// rightEncoder         encoder       A, B            
+// backEncoder          encoder       C, D            
+// leftEncoder          encoder       G, H            
+// bottomSensor         optical       11              
+// topSensor            distance      16              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// rightEncoder         encoder       A, B            
+// backEncoder          encoder       C, D            
+// leftEncoder          encoder       G, H            
+// bottomSensor         optical       11              
+// topSensor            distance      5               
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// rightEncoder         encoder       A, B            
+// backEncoder          encoder       C, D            
+// leftEncoder          encoder       G, H            
+// bottomSensor         optical       11              
 // ---- END VEXCODE CONFIGURED DEVICES ----
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // Robot Configuration:
@@ -128,7 +172,6 @@ void autonomous(void) {
 
 
 
-
 void usercontrol(void) {
 
   rightEncoder.resetRotation();
@@ -137,6 +180,9 @@ void usercontrol(void) {
   
   // User control code here, inside the loop
   //startInitTop.broadcast();
+
+  
+     countTopBalls(1000);
   while (1) {
     /*
     if(ct.ButtonLeft.pressing()) {
@@ -157,13 +203,11 @@ void usercontrol(void) {
     
     Brain.Screen.clearScreen();
     motorInfo();
-    //Brain.Screen.printAt(130, 90, "Color Sensor = %.0f", bottomSensor.hue());
+    //Brain.Screen.printAt(130, 70, "count = %d", topBallCount);
     /*double offsetKp = 0.3;
     double offset = (rightEncoder.position(vex::rotationUnits::deg) - leftEncoder.position(vex::rotationUnits::deg)) * offsetKp;
     Brain.Screen.clearScreen();
     Brain.Screen.printAt(130, 90, "Offset = %.0f, back = %.0f", offset, backEncoder.position(vex::rotationUnits::deg));*/
-
-
 
 
 

@@ -119,12 +119,12 @@ void drive() {
   double powerReduction = 1;
 
   powerReduction = calcPowerReduction(leftStickX, leftStickY);
-
+/*
   double reductionAmount = 0;
   double speedLF = getMotorSpeed(LeftFront);
   double speedLR = getMotorSpeed(LeftRear);
   double speedRF = getMotorSpeed(RightFront);
-  double speedRR = getMotorSpeed(RightRear);
+  double speedRR = getMotorSpeed(RightRear);*/
 
   
   if ((abs(leftStickX) >= 10 || abs(leftStickY) >= 10) || abs(rightStickX) > 5) {

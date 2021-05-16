@@ -2,8 +2,8 @@
 
 using namespace vex;
 
-double logFunction(double val) {
-  return 0.28 * log10(val * 100);
+double logFunction(double val, double stiffness) {
+  return (stiffness / 2) * log10(val * 100);
 }
 
 
@@ -251,8 +251,6 @@ void strafeRightPid (double distance, double maxSpeed) {
 
   while (fabs(error) > 20) {
 
-      Brain.Screen.clearScreen();
-      Brain.Screen.printAt(130, 90, "Back = %.0f", backEncoder.position(vex::rotationUnits::deg));
       ///*
       error = distance - backEncoder.position(vex::rotationUnits::deg);
       //*/
@@ -295,8 +293,7 @@ void strafeRightPid (double distance, double maxSpeed) {
       double offset = 0;
       double offsetKp = 0.03;
       offset = (rightEncoder.position(vex::rotationUnits::deg) - leftEncoder.position(vex::rotationUnits::deg)) * offsetKp;
-      Brain.Screen.clearScreen();
-      Brain.Screen.printAt(130, 90, "Offset = %.0f", offset);
+
 
 
       LeftFront.spin(vex::directionType::fwd, power + offset, vex::velocityUnits::pct);
@@ -322,21 +319,21 @@ void strafeRightPid (double distance, double maxSpeed) {
 
 }
 
-void splinePid (double distanceLeft, double distanceRight, double maxSpeed) {
+void splinePid (double distanceLeft, double distanceRight, double maxSpeed, double stiffness) {
   // ku = 0.165
   // pu = 811 ms
-  double KP = 0.09;
+  double KP = 0.12;
   double KI = 0;
-  double KD = 0;
+  double KD = 0.05;
 
   double splineLeftFactor;
   double splineRightFactor;
 
-  if (distanceLeft > distanceRight) {
+  if ((distanceLeft > distanceRight && distanceLeft > 0) || (distanceLeft < distanceRight && distanceLeft < 0)) {
     splineLeftFactor = 1;
-    splineRightFactor = logFunction(fabs(distanceRight / distanceLeft));
+    splineRightFactor = logFunction(fabs(distanceRight / distanceLeft), fabs(stiffness / distanceLeft));
   } else {
-    splineLeftFactor = logFunction(fabs(distanceLeft / distanceRight));
+    splineLeftFactor = logFunction(fabs(distanceLeft / distanceRight), fabs(stiffness / distanceRight));
     splineRightFactor = 1;
   }
 
@@ -361,7 +358,7 @@ void splinePid (double distanceLeft, double distanceRight, double maxSpeed) {
   errors[0] = distanceLeft - leftEncoder.position(vex::rotationUnits::deg);
   errors[1] = distanceRight - rightEncoder.position(vex::rotationUnits::deg);
 
-  while (/*fabs(errors[0]) > 20 && fabs(errors[1]) > 20*/true) {
+  while (fabs(errors[0]) > 20 && fabs(errors[1]) > 20) {
       ///*
       errors[0] = distanceLeft - leftEncoder.position(vex::rotationUnits::deg);
       errors[1] = distanceRight - rightEncoder.position(vex::rotationUnits::deg);

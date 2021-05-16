@@ -3,7 +3,9 @@
 using namespace vex;
 
 void auton() {
-  int autonselect = 8;
+  int autonselect = 0;
+  
+
   
   if (autonselect == 0) {
     homerow(true);

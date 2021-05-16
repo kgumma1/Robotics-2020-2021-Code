@@ -2,108 +2,147 @@
 
 using namespace vex;
 
+vex::task printInfo;
+
+int printinfo() {
+  while (1) {
+    Brain.Screen.printAt(130, 70, "top = %d");
+  }
+}
 
 void homerow(bool blueAlliance) {
   checkred = blueAlliance;
   intake();
   wait(600, msec);
 
+  intake(20);
 
-  initSensors();
-
-
-  movePid(3.75, 100);
-  strafeRightPid(4, 100);
   
-  turnRightPid(-32, 100);
-  alignRobot(300, 100, true);
+  countTopBalls(3);
 
-  index();
+  splinePid(13, 6, 100, 11);
 
-  intake(60);
-  while (!checkColor()) {
+  alignRobot(300);
+
+
+  index(90);
+  intake(100);
+  bottomBallCounter(3);
+  intake(-100);
+  
+  while (topBallCount < 3) {
     wait(1, msec);
   }
 
 
+  index(-20);
+  intake(0);
+  wait(400, msec);
 
-  brakeMotor(LeftIntake);
-  brakeMotor(RightIntake);
-
-  wait(100, msec);
-  index(-100);
-  intake(-100);
-
-  movePid(-35, 100);
-
-
-
-  turnRightPid(-57, 100);
-
-  strafeRightPid(-25, 70);
-
-  index();
-
-  intake();
-
-  movePid(14, 100);
-  //Brain.Screen.printAt(10, 10, "nalkfdjnlkasjlkfdj");
-  alignRobot(500, 60);
-
+  LeftIntake.stop(vex::brakeType::hold);
+  RightIntake.stop(vex::brakeType::hold);
+  index(0);
   
-//  while (!( (70 > bottomSensor.hue() || 345 < bottomSensor.hue()) && bottomSensor.isNearObject() ) ) {
 
-  while (!checkColor()) {
-    wait(1, msec);
-  }
-
-  intake(-100);
   
 
 
-  movePid(-17, 100);
+  splinePid(-62, -57, 100, 51.5);
 
-  strafeRightPid(-33, 100);
 
   brakeMotor(TopRoller);
   brakeMotor(BottomRoller);
   brakeMotor(LeftIntake);
   brakeMotor(RightIntake);
+  
+  turnRightPid(87, 100);
 
-  turnRightPid(-47, 100);
 
-  intake();
+  alignRobot(500, 50, true);
+
+  countTopBalls(3);
+
+  
   index();
 
-  movePid(24, 100);
+  intake();
 
-  alignRobot(300);
+  bottomBallCounter(2);
 
-  while (!checkColor()) {
+  intake(-100);
+
+  while (topBallCount < 2) {
+    wait(1, msec);
+  }
+  wait(300, msec);
+  brakeMotor(TopRoller);
+  brakeMotor(BottomRoller);
+
+  movePid(-10, 100);
+
+  intake();
+
+  turnRightPid(85, 100);
+
+  countTopBalls(5);
+
+  intakeOne();
+
+  index(100);
+
+
+
+
+  splinePid(53, 58, 100, 39);
+
+
+  alignRobot(500, 100, true);
+
+
+  while (topBallCount < 1) {
     wait(1, msec);
   }
 
+
+  wait(300, msec);
+  brakeMotor(LeftIntake);
+  brakeMotor(RightIntake);
+  brakeMotor(TopRoller);
+  brakeMotor(BottomRoller);
+
+  splinePid(-40, -39, 100, 33);
 
 
   brakeMotor(LeftIntake);
   brakeMotor(RightIntake);
 
-  wait(70, msec);
-  index(-100);
+  turnRightPid(145, 100);
+
   intake(-100);
 
-  movePid(-20, 100);
+  movePid(25, 100);
 
-  LeftFront.stop(vex::brakeType::hold);
-  LeftRear.stop(vex::brakeType::hold);
-  RightFront.stop(vex::brakeType::hold);
-  RightRear.stop(vex::brakeType::hold);
+
+  strafeRightPid(8, 100);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
   wait(5000, msec);
-
 
 
 }
