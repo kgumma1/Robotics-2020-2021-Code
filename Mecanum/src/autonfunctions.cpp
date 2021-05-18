@@ -56,6 +56,28 @@ void alignRobot(int time, int speed, bool waitComp) {
   }
 }
 
+void alignLeft(){
+  LeftFront.spin(vex::directionType::fwd, alignSpeed, vex::velocityUnits::pct);
+  LeftRear.spin(vex::directionType::fwd, alignSpeed, vex::velocityUnits::pct);
+  wait(500, msec);
+  RightRear.spin(vex::directionType::fwd, alignSpeed, vex::velocityUnits::pct);
+  RightFront.spin(vex::directionType::fwd, alignSpeed, vex::velocityUnits::pct);
+
+  wait(400, msec);
+  brakeMotor(LeftFront);
+  brakeMotor(RightFront);
+  brakeMotor(LeftRear);
+  brakeMotor(RightRear);
+
+}
+
+vex::event alignLeftTrigger(alignLeft);
+
+void alignRobotLeft() {
+
+  alignLeftTrigger.broadcast();
+}
+
 int redLowBound;
 int blueLowBound;
 int blueHighBound;
@@ -152,7 +174,7 @@ int topBallCounter() {
     Brain.Screen.printAt(30, 50, "top = %d", topBallCount);
   }
 
-  wait(50, msec);
+  wait(150, msec);
 
   index(-20);
   
@@ -200,3 +222,12 @@ void intakeOne() {
 
 }
 
+int indexOff() {
+
+  wait(400, msec);
+
+  LeftIntake.stop(vex::brakeType::hold);
+  RightIntake.stop(vex::brakeType::hold);
+  index(0);
+  return 0;
+}

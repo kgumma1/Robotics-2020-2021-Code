@@ -103,8 +103,10 @@ bool nearTopSensor();
 int topBallCounter();
 void countTopBalls(int num);
 void intakeOne();
-
+int indexOff();
 void motorInfo();
+
+void alignRobotLeft();
 
 
 #define waitUntil(condition)                                                   \
