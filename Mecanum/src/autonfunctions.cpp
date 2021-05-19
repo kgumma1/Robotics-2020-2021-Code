@@ -119,7 +119,7 @@ bool checkColor() {
   
 }
 
-
+double changeIntakeSpeed = 40;
 void bottomBallCounter(int numBallsBottom) {
   int counter = 0;
   bool prevBall = false;
@@ -135,7 +135,9 @@ void bottomBallCounter(int numBallsBottom) {
     wait(10, msec);
     //Brain.Screen.clearScreen();
     //Brain.Screen.printAt(130, 90, "b = %d, t = %d", counter, topBallCount);
-
+    if (counter == 2) {
+      intake(changeIntakeSpeed);
+    } 
   }
 
 
@@ -174,7 +176,7 @@ int topBallCounter() {
     Brain.Screen.printAt(30, 50, "top = %d", topBallCount);
   }
 
-  wait(150, msec);
+  wait(250, msec);
 
   index(-20);
   
@@ -209,7 +211,6 @@ int intakeOneStop() {
   Brain.Screen.printAt(130, 90, "t = %d", topBallCount);
 
   intake(-100);
-  index(0);
   return 0;
 }
 

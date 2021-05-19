@@ -24,6 +24,7 @@ extern double wheelCirc;
 extern double turnCirc;
 extern int alignTime;
 extern int alignSpeed;
+extern double changeIntakeSpeed;
 
 extern brain Brain;
 extern competition Competition;
