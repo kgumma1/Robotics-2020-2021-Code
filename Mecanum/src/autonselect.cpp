@@ -3,7 +3,7 @@
 using namespace vex;
 
 void auton() {
-  int autonselect = 0;
+  int autonselect = 1;
   
 
   

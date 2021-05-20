@@ -5,6 +5,23 @@
 // backEncoder          encoder       C, D            
 // leftEncoder          encoder       G, H            
 // bottomSensor         optical       11              
+// topSensor            distance      15              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// rightEncoder         encoder       A, B            
+// backEncoder          encoder       C, D            
+// leftEncoder          encoder       G, H            
+// bottomSensor         optical       11              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// rightEncoder         encoder       A, B            
+// backEncoder          encoder       C, D            
+// leftEncoder          encoder       G, H            
+// bottomSensor         optical       11              
 // topSensor            optical       15              
 // ---- END VEXCODE CONFIGURED DEVICES ----
 // ---- START VEXCODE CONFIGURED DEVICES ----

@@ -17,7 +17,7 @@ vex::task indexOffTask;
 void homerow(bool blueAlliance) {
   checkred = blueAlliance;
   intake();
-  wait(300, msec);
+  wait(500, msec);
 
   intake(20);
 
@@ -26,16 +26,16 @@ void homerow(bool blueAlliance) {
 
   splinePid(20, 7, 100, 14);
  
-  alignRobot(300);
+  alignRobot(400);
 
 
-  index(70);
-  intake(80);
+  index(100);
+  intake(70);
 
   wait(100, msec);
 
   intake(70);
-  changeIntakeSpeed = 60;
+  changeIntakeSpeed = 50;
   bottomBallCounter(3);
   intake(-100);
 
@@ -48,14 +48,18 @@ void homerow(bool blueAlliance) {
   index(-10);
   intake(0);
 
-  wait(400, msec);
+  wait(500, msec);
 
   indexOffTask = vex::task(indexOff);
 
   
 
+  if (blueAlliance) {
+    splinePid(-64, -63, 100, 36.5);
 
-  splinePid(-64, -63, 100, 36.5);
+  } else {
+    splinePid(-62, -61, 100, 36.5);
+  }
 
 
   brakeMotor(TopRoller);
@@ -63,15 +67,19 @@ void homerow(bool blueAlliance) {
   brakeMotor(LeftIntake);
   brakeMotor(RightIntake);
   
-  turnRightPid(101, 100);
+  turnRightPid(102, 100);
+  if (blueAlliance) {
+    movePid(11, 100);
 
-  movePid(8, 100);
+  } else {
+    movePid(8, 100);
+  }
   alignRobot(600, 50);
 
   countTopBalls(3);
 
   
-  index(60);
+  index(80);
 
   intake(60);
   changeIntakeSpeed = 60;
@@ -96,20 +104,23 @@ void homerow(bool blueAlliance) {
 
   intakeOne();
 
-  index(15);
+  index(20);
 
 
 
+  if (blueAlliance) {
+    splinePid(54, 59, 100, 36.5);
+  } else {
+    splinePid(54, 59, 100, 37);
+  }
+  alignRobot(1000, 50, false);
 
-  splinePid(54, 59, 100, 40.5);
-
-  alignRobot(400, 50, false);
-  index(65);
   while (topBallCount < 1) {
     wait(1, msec);
+    index(100);
   }
 
-  wait(100, msec);
+  wait(400, msec);
 
   brakeMotor(LeftIntake);
   brakeMotor(RightIntake);
@@ -125,8 +136,11 @@ void homerow(bool blueAlliance) {
   turnRightPid(136, 100);
 
   intake(-100);
-
-  movePid(23, 100);
+  if (blueAlliance) {
+    movePid(23, 100);
+  } else {
+    movePid(28, 100);
+  }
 
 
   strafeRightPid(17, 100);

@@ -146,9 +146,9 @@ void bottomBallCounter(int numBallsBottom) {
 }
 
 bool nearTopSensor() {
-  //return topSensor.objectDistance(vex::distanceUnits::mm) < 80;
+  return topSensor.objectDistance(vex::distanceUnits::mm) < 100 && topSensor.objectDistance(vex::distanceUnits::mm) > 0;
 
-  return topSensor.isNearObject();
+  //return topSensor.isNearObject();
 }
 
 
@@ -176,7 +176,7 @@ int topBallCounter() {
     Brain.Screen.printAt(30, 50, "top = %d", topBallCount);
   }
 
-  wait(250, msec);
+  wait(400, msec);
 
   index(-20);
   
@@ -209,7 +209,7 @@ int intakeOneStop() {
   }
   
   Brain.Screen.printAt(130, 90, "t = %d", topBallCount);
-
+  index(0);
   intake(-100);
   return 0;
 }
