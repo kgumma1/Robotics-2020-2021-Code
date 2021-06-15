@@ -19,18 +19,21 @@ void homerow(bool blueAlliance) {
   intake();
   wait(500, msec);
 
-  intake(20);
+  intake(100);
 
   
-  countTopBalls(3);
+  countTopBalls(2);
 
   splinePid(20, 7, 100, 14);
- 
-  alignRobot(400);
+  if (blueAlliance) {
+    alignRobot(600);
+  } else {
+    alignRobot(200);
+  }
 
 
   index(100);
-  intake(70);
+  intake(60);
 
   wait(100, msec);
 
@@ -39,7 +42,7 @@ void homerow(bool blueAlliance) {
   bottomBallCounter(3);
   intake(-100);
 
-  while (topBallCount < 3) {
+  while (topBallCount < 2) {
     wait(1, msec);
 
   }
@@ -55,10 +58,10 @@ void homerow(bool blueAlliance) {
   
 
   if (blueAlliance) {
-    splinePid(-64, -63, 100, 36.5);
+    splinePid(-67, -66, 100, 36);
 
   } else {
-    splinePid(-62, -61, 100, 36.5);
+    splinePid(-63.5, -62.5, 100, 36.5);
   }
 
 
@@ -66,23 +69,26 @@ void homerow(bool blueAlliance) {
   brakeMotor(BottomRoller);
   brakeMotor(LeftIntake);
   brakeMotor(RightIntake);
-  
-  turnRightPid(102, 100);
   if (blueAlliance) {
-    movePid(11, 100);
+    turnRightPid(103, 100);
+  } else {
+    turnRightPid(103, 100);
+  }
+  if (blueAlliance) {
+    movePid(9, 100);
 
   } else {
     movePid(8, 100);
   }
-  alignRobot(600, 50);
+  alignRobot(600, 50, true);
 
   countTopBalls(3);
 
   
-  index(80);
+  index(70);
 
   intake(60);
-  changeIntakeSpeed = 60;
+  changeIntakeSpeed = 70;
   bottomBallCounter(2);
 
   intake(-100);
@@ -109,9 +115,9 @@ void homerow(bool blueAlliance) {
 
 
   if (blueAlliance) {
-    splinePid(54, 59, 100, 36.5);
+    splinePid(54, 59, 100, 39.5);
   } else {
-    splinePid(54, 59, 100, 37);
+    splinePid(54, 59, 100, 42.5);
   }
   alignRobot(1000, 50, false);
 
@@ -120,26 +126,26 @@ void homerow(bool blueAlliance) {
     index(100);
   }
 
-  wait(400, msec);
+  wait(1000, msec);
 
   brakeMotor(LeftIntake);
   brakeMotor(RightIntake);
   brakeMotor(TopRoller);
   brakeMotor(BottomRoller);
-
+/*
   splinePid(-40, -39, 100, 33);
 
 
   brakeMotor(LeftIntake);
   brakeMotor(RightIntake);
 
-  turnRightPid(136, 100);
+  turnRightPid(139, 100);
 
   intake(-100);
   if (blueAlliance) {
-    movePid(23, 100);
+    movePid(20, 100);
   } else {
-    movePid(28, 100);
+    movePid(22, 100);
   }
 
 
@@ -160,7 +166,7 @@ void homerow(bool blueAlliance) {
 
 
 
-  
+  */
 
   wait(5000, msec);
 

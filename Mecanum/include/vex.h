@@ -106,8 +106,15 @@ void countTopBalls(int num);
 void intakeOne();
 int indexOff();
 void motorInfo();
-
 void alignRobotLeft();
+
+class positionInfo {
+  public:
+    int x, y, heading;
+    positionInfo() {};
+};
+
+positionInfo getPosition(int leftEncoderVal, int rightEncoderVal, int backEncoderVal);
 
 
 #define waitUntil(condition)                                                   \

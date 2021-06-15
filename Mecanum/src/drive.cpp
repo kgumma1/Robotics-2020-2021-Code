@@ -108,6 +108,9 @@ double accelCap(double num, double currVelocity, bool active) {
 //double encoderLeftInit = leftEncoder.position(degrees);
 
 
+bool locked = false;
+bool prev = false;
+
 void drive() {
   //update stick positions
   int leftStickX = ct.Axis4.position();
@@ -125,9 +128,19 @@ void drive() {
   double speedLR = getMotorSpeed(LeftRear);
   double speedRF = getMotorSpeed(RightFront);
   double speedRR = getMotorSpeed(RightRear);*/
+  if (prev == false && ct.ButtonX.pressing()) {
+    locked = !locked;
+  }
 
-  
-  if ((abs(leftStickX) >= 10 || abs(leftStickY) >= 10) || abs(rightStickX) > 5) {
+  prev = ct.ButtonX.pressing();
+
+  if (locked) {
+    LeftFront.stop(vex::brakeType::hold);
+    RightFront.stop(vex::brakeType::hold);
+    RightRear.stop(vex::brakeType::hold);
+    LeftRear.stop(vex::brakeType::hold);
+    
+  } else if ((abs(leftStickX) >= 10 || abs(leftStickY) >= 10) || abs(rightStickX) > 5) {
     if (abs(leftStickX) < 10) {
       leftStickX = 0;
     }
